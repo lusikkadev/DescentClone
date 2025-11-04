@@ -17,20 +17,30 @@ public class PlayerController : MonoBehaviour
     public InputActionProperty downAction;
 
     [Header("Translation")]
-    public float maxForwardSpeed = 30f;
-    public float maxStrafeSpeed = 30f;
-    public float maxVerticalSpeed = 30f;
-    public float acceleration = 30f;
-    public float driftDecay = 40f;
+    public float maxForwardSpeed = 80f;
+    public float maxStrafeSpeed = 120f;
+    public float maxVerticalSpeed = 120f;
+    public float acceleration = 60f;
+    public float driftDecay = 60f;
     public float inputDeadzone = 0.1f;
 
     [Header("Rotation")]
     public float yawSpeed = 120f;
     public float pitchSpeed = 120f;
     public float rollSpeed = 120f;
-    public float angularAcceleration = 600f;
+    public float angularAcceleration = 400f;
     public float rotationSmooth = 12f;
     public bool invertPitch = false;
+
+    [Header("Collision tuning")]
+    [Range(0f, 1f)]
+    [Tooltip("Fraction of tangential velocity to keep after a collision. 0 = complete stop along surface, 1 = keep full tangent speed.")]
+    public float collisionTangentialRetention = 0.2f;
+    [Range(0f, 1f)]
+    [Tooltip("Fraction of angular velocity to keep after a collision. 0 = stop rotating, 1 = keep full angular velocity.")]
+    public float collisionAngularRetention = 0.1f;
+    [Tooltip("If the normal (into-surface) component of velocity is small than this threshold, it's ignored.")]
+    public float collisionNormalIgnoreThreshold = 0.05f;
 
     Rigidbody rb;
     Vector3 localVelocity;
@@ -139,15 +149,33 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // PITÄÄ SÄÄTÄÄ VIELÄ BAUNSSI
-        if (collision.contactCount > 0)
+        // Process hits and prevent going crazy
+
+        if (collision.contactCount == 0) return;
+
+        ContactPoint contact = collision.GetContact(0);
+        Vector3 normal = contact.normal;
+
+        Vector3 worldVel = rb.linearVelocity;
+        Vector3 normalComponent = Vector3.Project(worldVel, normal);
+        Vector3 tangential = worldVel - normalComponent;
+
+        if (normalComponent.magnitude < collisionNormalIgnoreThreshold)
         {
-            ContactPoint contact = collision.GetContact(0);
-            Vector3 worldVel = rb.linearVelocity;
-            Vector3 tangential = Vector3.ProjectOnPlane(worldVel, contact.normal);
-            rb.linearVelocity = tangential;
-            localVelocity = transform.InverseTransformDirection(tangential);
+            // Ignore small normal components. Jitter.
+            normalComponent = Vector3.zero;
         }
+
+        //damping tangential velocity
+        Vector3 newTangential = tangential * Mathf.Clamp01(collisionTangentialRetention);
+
+        // final velocity (tangential)
+        rb.linearVelocity = newTangential;
+        localVelocity = transform.InverseTransformDirection(newTangential);
+
+        // damping angular velocity
+        rb.angularVelocity = rb.angularVelocity * Mathf.Clamp01(collisionAngularRetention);
+
     }
 
     // Helpers
