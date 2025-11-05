@@ -6952,13 +6952,37 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2346970768239039846, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
+      propertyPath: maxStrafeSpeed
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346970768239039846, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
+      propertyPath: maxVerticalSpeed
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 6743609936654256215, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8321008031381616792, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
+      propertyPath: swaySpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8321008031381616792, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
+      propertyPath: maxTurnRoll
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8321008031381616792, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
       propertyPath: swayAmountX
-      value: 0.2
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8321008031381616792, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
+      propertyPath: swayAmountY
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8321008031381616792, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
+      propertyPath: rollSmoothing
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8501163429812442979, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
       propertyPath: m_Material
