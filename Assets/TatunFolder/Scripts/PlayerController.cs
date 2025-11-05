@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -42,9 +43,10 @@ public class PlayerController : MonoBehaviour
     [Tooltip("If the normal (into-surface) component of velocity is small than this threshold, it's ignored.")]
     public float collisionNormalIgnoreThreshold = 0.05f;
 
+
     Rigidbody rb;
     Vector3 localVelocity;
-    bool wasTransInput = false;
+    public bool wasTransInput = false;
 
     void Awake()
     {
@@ -52,7 +54,6 @@ public class PlayerController : MonoBehaviour
         rb.useGravity = false;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.maxAngularVelocity = 50f;
-        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
     }
 
     void OnEnable()
@@ -77,6 +78,7 @@ public class PlayerController : MonoBehaviour
     {
         if (rb == null) return;
         float dt = Time.fixedDeltaTime;
+
 
         // Read inputs
         Vector2 leftStick = ReadVector2(translateAction);
@@ -206,4 +208,5 @@ public class PlayerController : MonoBehaviour
         if (prop == null || prop.action == null) return 0f;
         try { return prop.action.ReadValue<float>(); } catch { return 0f; }
     }
+
 }
