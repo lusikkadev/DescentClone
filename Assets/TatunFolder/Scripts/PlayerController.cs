@@ -113,14 +113,16 @@ public class PlayerController : MonoBehaviour
         if (hasTransInput)
         {
             // Snap on initial input
-            if (!wasTransInput)
-            {
-                localVelocity = targetLocalVelocity;
-            }
-            else
-            {
-                localVelocity = Vector3.MoveTowards(localVelocity, targetLocalVelocity, acceleration * dt);
-            }
+            //if (!wasTransInput)
+            //{
+            //    localVelocity = targetLocalVelocity;
+            //}
+            //else
+            //{
+            //    localVelocity = Vector3.MoveTowards(localVelocity, targetLocalVelocity, acceleration * dt);
+            //}
+
+            localVelocity = Vector3.MoveTowards(localVelocity, targetLocalVelocity, acceleration * dt);
 
             rb.linearVelocity = transform.TransformDirection(localVelocity);
         }

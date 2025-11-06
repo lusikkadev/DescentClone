@@ -3,8 +3,8 @@ using UnityEngine;
 public class CameraSway : MonoBehaviour
 {
     [Header("Idle sway")]
-    public float swayAmountX = 0.5f;
-    public float swayAmountY = 2f;
+    public float swayAmountX = 0.2f;
+    public float swayAmountY = 0.5f;
     public float swaySpeed = 3f;
 
     [Header("References")]
@@ -14,13 +14,13 @@ public class CameraSway : MonoBehaviour
     [Tooltip("Max roll (degrees) driven by angular/yaw motion")]
     public float maxTurnRoll = 20f;
     [Tooltip("Max roll (degrees) driven by lateral/strafe motion")]
-    public float maxStrafeRoll = 6f;
+    public float maxStrafeRoll = 15f;
     [Tooltip("How snappy the camera corrects to the target roll (higher = snappier)")]
-    public float rollSmoothing = 12f;
+    public float rollSmoothing = 3f;
     [Tooltip("Lateral speed (units/s) that results in full strafe roll")]
     public float lateralSpeedForFullRoll = 20f;
     [Tooltip("Multiplier converting yaw rate (deg/s) into roll degrees")]
-    public float angularToRollMultiplier = 0.08f;
+    public float angularToRollMultiplier = 0.44f;
 
     Vector3 initialPosition;
     Quaternion initialLocalRotation;
