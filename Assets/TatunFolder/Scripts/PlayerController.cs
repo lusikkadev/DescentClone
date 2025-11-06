@@ -18,9 +18,9 @@ public class PlayerController : MonoBehaviour
     public InputActionProperty downAction;
 
     [Header("Translation")]
-    public float maxForwardSpeed = 80f;
-    public float maxStrafeSpeed = 60f;
-    public float maxVerticalSpeed = 60f;
+    public float maxForwardSpeed = 20f;
+    public float maxStrafeSpeed = 20f;
+    public float maxVerticalSpeed = 15f;
     public float acceleration = 100f;
     public float driftDecay = 40f;
     public float inputDeadzone = 0.1f;
@@ -121,7 +121,6 @@ public class PlayerController : MonoBehaviour
             //{
             //    localVelocity = Vector3.MoveTowards(localVelocity, targetLocalVelocity, acceleration * dt);
             //}
-
             localVelocity = Vector3.MoveTowards(localVelocity, targetLocalVelocity, acceleration * dt);
 
             rb.linearVelocity = transform.TransformDirection(localVelocity);
@@ -135,9 +134,11 @@ public class PlayerController : MonoBehaviour
 
             // Keep local velocity for next input
             localVelocity = transform.InverseTransformDirection(decayedWorldVel);
+
         }
 
         wasTransInput = hasTransInput;
+
 
         // Rotation:
         float yawRate = rightStick.x * yawSpeed;
@@ -151,6 +152,7 @@ public class PlayerController : MonoBehaviour
         // Smooth angular velocity change
         float angAccelRad = angularAcceleration * Mathf.Deg2Rad;
         rb.angularVelocity = Vector3.MoveTowards(rb.angularVelocity, targetWorldAngVel, angAccelRad * dt);
+
     }
 
     private void OnCollisionEnter(Collision collision)
