@@ -18,8 +18,8 @@ public class PlayerController : MonoBehaviour
     public InputActionProperty downAction;
 
     [Header("Translation")]
-    public float maxForwardSpeed = 20f;
-    public float maxStrafeSpeed = 20f;
+    public float maxForwardSpeed = 30f;
+    public float maxStrafeSpeed = 30f;
     public float maxVerticalSpeed = 15f;
     public float acceleration = 100f;
     public float driftDecay = 40f;
