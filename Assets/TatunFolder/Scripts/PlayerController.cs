@@ -19,10 +19,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("Translation")]
     public float maxForwardSpeed = 80f;
-    public float maxStrafeSpeed = 120f;
-    public float maxVerticalSpeed = 120f;
-    public float acceleration = 60f;
-    public float driftDecay = 60f;
+    public float maxStrafeSpeed = 60f;
+    public float maxVerticalSpeed = 60f;
+    public float acceleration = 100f;
+    public float driftDecay = 40f;
     public float inputDeadzone = 0.1f;
 
     [Header("Rotation")]
@@ -36,12 +36,14 @@ public class PlayerController : MonoBehaviour
     [Header("Collision tuning")]
     [Range(0f, 1f)]
     [Tooltip("Fraction of tangential velocity to keep after a collision. 0 = complete stop along surface, 1 = keep full tangent speed.")]
-    public float collisionTangentialRetention = 0.2f;
+    public float collisionTangentialRetention = 0.0f;
     [Range(0f, 1f)]
     [Tooltip("Fraction of angular velocity to keep after a collision. 0 = stop rotating, 1 = keep full angular velocity.")]
-    public float collisionAngularRetention = 0.1f;
+    public float collisionAngularRetention = 0.0f;
     [Tooltip("If the normal (into-surface) component of velocity is small than this threshold, it's ignored.")]
     public float collisionNormalIgnoreThreshold = 0.05f;
+
+    // Complete stop / no retention seems to be better for Descent style imo
 
 
     Rigidbody rb;
