@@ -151,9 +151,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2f81765690cf2d47a34a0fc2e0b20f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraSway
-  swayAmount: 1.5
-  swaySpeed: 2
+  swayAmountX: 0.2
+  swayAmountY: 0.5
+  swaySpeed: 3
   rbPlayer: {fileID: 2257738071151159198}
+  maxTurnRoll: 20
+  maxStrafeRoll: 6
+  rollSmoothing: 12
+  lateralSpeedForFullRoll: 20
+  angularToRollMultiplier: 0.15
 --- !u!135 &8501163429812442979
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -161,7 +167,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3103424496067314767}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: eed176ffaef7c22478b476e3c1f78d4b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -187,6 +193,7 @@ GameObject:
   - component: {fileID: 2012731517476903078}
   - component: {fileID: 2257738071151159198}
   - component: {fileID: 2346970768239039846}
+  - component: {fileID: 3298988518096222905}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -266,7 +273,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &2346970768239039846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,7 +292,7 @@ MonoBehaviour:
       m_Name: Translate
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 4d2b07ee-2c27-4cd8-a4c1-9e5b7fb3f86b
+      m_Id: 893b47ef-dbdf-4af9-8bbf-78eb334654f8
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -297,7 +304,7 @@ MonoBehaviour:
       m_Name: Rotate
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 9e7f2c65-55bf-4609-94ce-48191695f5b8
+      m_Id: f833ba42-ff45-4bf1-9419-5715e4ac5c8c
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -309,7 +316,7 @@ MonoBehaviour:
       m_Name: Roll
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 52a3a51e-efe6-444c-b516-e63fedc6d69e
+      m_Id: ef8b0505-6c73-4c2d-958c-cbf9e2275f41
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -321,7 +328,7 @@ MonoBehaviour:
       m_Name: Up
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: a26b182f-c490-41aa-84ee-1a95a19148af
+      m_Id: a46a4513-abf0-4486-b9d6-314838941f4b
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -333,15 +340,15 @@ MonoBehaviour:
       m_Name: Down
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: ad64b9dd-f492-4916-bd93-3a07db26c71c
+      m_Id: 2c5c2738-2e29-4af8-8a7a-9d3b054cc366
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 5814192345092058734, guid: a43678ea1e7566c448ff4308f3a86330, type: 3}
-  maxForwardSpeed: 80
-  maxStrafeSpeed: 80
-  maxVerticalSpeed: 80
+  maxForwardSpeed: 30
+  maxStrafeSpeed: 30
+  maxVerticalSpeed: 15
   acceleration: 100
   driftDecay: 40
   inputDeadzone: 0.1
@@ -355,3 +362,24 @@ MonoBehaviour:
   collisionAngularRetention: 0
   collisionNormalIgnoreThreshold: 0.5
   wasTransInput: 0
+--- !u!114 &3298988518096222905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6743609936654256215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62555f438e98f4a47a8b0e7bf9d87cd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
+  aimCamera: {fileID: 3286377408955417559}
+  ownerRb: {fileID: 2257738071151159198}
+  weapons:
+  - {fileID: 7446204508204908133, guid: 312369fd417c5a74ab51038eb19f8ac7, type: 3}
+  handleInput: 1
+  fireAction: {fileID: 8281635707354912270, guid: a43678ea1e7566c448ff4308f3a86330, type: 3}
+  fireHoldToAuto: 1
+  fireHoldThreshold: 0.5
+  aimSmoothing: 8

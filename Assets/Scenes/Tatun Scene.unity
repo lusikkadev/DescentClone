@@ -4640,8 +4640,42 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6743609936654256215, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3740207528240842686}
   m_SourcePrefab: {fileID: 100100000, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
+--- !u!1 &3740207528240842684 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6743609936654256215, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
+  m_PrefabInstance: {fileID: 3740207528240842683}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &3740207528240842685 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3286377408955417559, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
+  m_PrefabInstance: {fileID: 3740207528240842683}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3740207528240842686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3740207528240842684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62555f438e98f4a47a8b0e7bf9d87cd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
+  aimCamera: {fileID: 3740207528240842685}
+  ownerRb: {fileID: 151909042}
+  weapons:
+  - {fileID: 7446204508204908133, guid: 312369fd417c5a74ab51038eb19f8ac7, type: 3}
+  handleInput: 1
+  fireAction: {fileID: 8281635707354912270, guid: a43678ea1e7566c448ff4308f3a86330, type: 3}
+  fireHoldToAuto: 1
+  fireHoldThreshold: 0.5
+  aimSmoothing: 8
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
