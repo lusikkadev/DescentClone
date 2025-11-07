@@ -241,10 +241,14 @@ public class WeaponManager : MonoBehaviour
         }
         
         // If we removed the current weapon and have weapons left, equip the new current
-        if (wasCurrentWeapon && weapons.Count > 0 && weapons[currentIndex] != null)
+        if (wasCurrentWeapon && weapons.Count > 0)
         {
-            weapons[currentIndex].gameObject.SetActive(true);
-            weapons[currentIndex].OnEquip();
+            // Ensure current index is valid and weapon exists
+            if (currentIndex >= 0 && currentIndex < weapons.Count && weapons[currentIndex] != null)
+            {
+                weapons[currentIndex].gameObject.SetActive(true);
+                weapons[currentIndex].OnEquip();
+            }
         }
     }
 
