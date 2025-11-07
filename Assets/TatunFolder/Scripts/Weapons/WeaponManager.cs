@@ -30,6 +30,18 @@ public class WeaponManager : MonoBehaviour
         if (aimCamera == null) aimCamera = GetComponentInChildren<Camera>();
         if (ownerRb == null) ownerRb = GetComponent<Rigidbody>();
 
+        // Instantiate any prefab weapons (not already in scene hierarchy)
+        for (int i = 0; i < weapons.Count; i++)
+        {
+            if (weapons[i] != null && !weapons[i].gameObject.scene.IsValid())
+            {
+                // This weapon is a prefab reference, not an instance in the scene
+                var weaponInstance = Instantiate(weapons[i], transform);
+                weaponInstance.gameObject.SetActive(false);
+                weapons[i] = weaponInstance;
+            }
+        }
+
         foreach (var w in weapons)
         {
             if (w != null) w.Initialize(aimCamera, ownerRb);
