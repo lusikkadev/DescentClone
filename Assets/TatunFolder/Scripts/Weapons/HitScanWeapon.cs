@@ -1,12 +1,26 @@
 using UnityEngine;
 
+
+/// <summary>
+/// Hitscan weapon (laser/beam) that instantly hits targets using raycasting.
+/// Perfect for Descent-style laser weapons.
+/// </summary>
 public class HitScanWeapon : WeaponBase
 {
     [Header("Hitscan")]
+    [Tooltip("Maximum range of the weapon")]
     public float range = 200f;
+
+    [Tooltip("Damage dealt per hit")]
     public float damage = 10f;
+
+    [Tooltip("Visual effect spawned at hit point (optional)")]
     public GameObject impactPrefab;
+
+    [Tooltip("Tracer/beam visual effect (optional)")]
     public GameObject tracerPrefab;
+
+    [Tooltip("How long tracer visual lasts")]
     public float tracerLifetime = 0.2f;
 
     public override void Fire(Ray aimRay)
@@ -35,7 +49,18 @@ public class HitScanWeapon : WeaponBase
             {
                 var dir = (hit.point - muzzle.position);
                 var t = Instantiate(tracerPrefab, muzzle.position, Quaternion.LookRotation(dir));
-                Destroy(t, tracerLifetime);
+
+                // If tracer prefab contains BeamTracer, call Setup to stretch it to the hit point and handle lifetime
+                var beam = t.GetComponent<BeamTracer>();
+                if (beam != null)
+                {
+                    beam.Setup(muzzle.position, hit.point, tracerLifetime);
+                }
+                else
+                {
+                    // fallback: old behaviour
+                    Destroy(t, tracerLifetime);
+                }
             }
             else if (tracerPrefab == null)
             {
@@ -52,7 +77,16 @@ public class HitScanWeapon : WeaponBase
             if (tracerPrefab != null && muzzle != null)
             {
                 var t = Instantiate(tracerPrefab, muzzle.position, Quaternion.LookRotation(ray.direction));
-                Destroy(t, tracerLifetime);
+                var beam = t.GetComponent<BeamTracer>();
+                if (beam != null)
+                {
+                    // extend tracer a fixed distance forward when missing (use range or small length)
+                    beam.Setup(muzzle.position, muzzle.position + ray.direction * range, tracerLifetime);
+                }
+                else
+                {
+                    Destroy(t, tracerLifetime);
+                }
             }
             else if (tracerPrefab == null)
             {

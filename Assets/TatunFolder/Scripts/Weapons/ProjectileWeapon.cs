@@ -1,11 +1,20 @@
 using UnityEngine;
 
+/// <summary>
+/// Projectile-based weapon that spawns physical projectiles (rockets, plasma, etc.).
+/// Perfect for Descent-style missile and plasma weapons.
+/// </summary>
 public class ProjectileWeapon : WeaponBase
 {
     [Header("Projectile")]
+    [Tooltip("Prefab to spawn when firing (should have Projectile component)")]
     public GameObject projectilePrefab;
+    
+    [Tooltip("Initial speed of the projectile")]
     public float projectileSpeed = 100f;
-    public float spawnOffset = 0.5f; // forward offset from muzzle/camera to avoid self-collision
+    
+    [Tooltip("Forward offset from muzzle to avoid self-collision")]
+    public float spawnOffset = 0.5f;
 
     public override void Fire(Ray aimRay)
     {
