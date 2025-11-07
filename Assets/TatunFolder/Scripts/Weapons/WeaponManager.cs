@@ -180,6 +180,8 @@ public class WeaponManager : MonoBehaviour
     {
         if (weapon == null) return null;
         
+        bool isFirstWeapon = weapons.Count == 0;
+        
         WeaponBase instance = weapon;
         // If it's a prefab, instantiate it
         if (!weapon.gameObject.scene.IsValid())
@@ -192,7 +194,7 @@ public class WeaponManager : MonoBehaviour
         weapons.Add(instance);
         
         // If this is the first weapon, equip it
-        if (weapons.Count == 1)
+        if (isFirstWeapon)
         {
             currentIndex = 0;
             instance.gameObject.SetActive(true);
@@ -211,6 +213,14 @@ public class WeaponManager : MonoBehaviour
         if (index < 0 || index >= weapons.Count) return;
         
         var weapon = weapons[index];
+        bool wasCurrentWeapon = (index == currentIndex);
+        
+        // Unequip if removing current weapon
+        if (wasCurrentWeapon)
+        {
+            weapon?.OnUnequip();
+        }
+        
         weapons.RemoveAt(index);
         
         if (weapon != null && weapon.gameObject != null)
@@ -219,13 +229,19 @@ public class WeaponManager : MonoBehaviour
         }
         
         // Adjust current index if needed
-        if (currentIndex >= weapons.Count)
+        if (index < currentIndex)
         {
+            // Removed a weapon before current, shift index down
+            currentIndex--;
+        }
+        else if (currentIndex >= weapons.Count)
+        {
+            // Current index is now out of bounds, move to last weapon
             currentIndex = Mathf.Max(0, weapons.Count - 1);
         }
         
-        // Activate the new current weapon if there are any left
-        if (weapons.Count > 0 && weapons[currentIndex] != null)
+        // If we removed the current weapon and have weapons left, equip the new current
+        if (wasCurrentWeapon && weapons.Count > 0 && weapons[currentIndex] != null)
         {
             weapons[currentIndex].gameObject.SetActive(true);
             weapons[currentIndex].OnEquip();
