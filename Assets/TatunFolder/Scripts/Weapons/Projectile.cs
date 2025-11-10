@@ -20,7 +20,7 @@ public class Projectile : MonoBehaviour
         ownerRb = owner;
         hitMask = mask;
         rb.linearVelocity = inheritVelocity + initialVelocity;
-        // avoid hitting owner directly: ignore collisions between projectile collider and owner's colliders
+        // avoid hitting owner directly
         if (owner != null)
         {
             var ownerCols = owner.GetComponentsInChildren<Collider>();
@@ -36,11 +36,11 @@ public class Projectile : MonoBehaviour
     {
         if (((1 << collision.gameObject.layer) & hitMask) == 0) return;
 
-        // simple damage interface
+        // damage
         var dmg = collision.collider.GetComponent<IDamageable>();
         if (dmg != null) dmg.TakeDamage(damage);
 
-        // spawn VFX here if you want
+        // add sfx etc
         Destroy(gameObject);
     }
 }

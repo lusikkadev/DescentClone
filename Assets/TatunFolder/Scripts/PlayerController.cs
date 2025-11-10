@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
 
         if (hasTransInput)
         {
-            // Snap on initial input
+            // Snap on initial input // Not working well
             //if (!wasTransInput)
             //{
             //    localVelocity = targetLocalVelocity;
@@ -121,6 +121,8 @@ public class PlayerController : MonoBehaviour
             //{
             //    localVelocity = Vector3.MoveTowards(localVelocity, targetLocalVelocity, acceleration * dt);
             //}
+
+
             localVelocity = Vector3.MoveTowards(localVelocity, targetLocalVelocity, acceleration * dt);
 
             rb.linearVelocity = transform.TransformDirection(localVelocity);

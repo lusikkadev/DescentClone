@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3388195027574118196}
   - component: {fileID: 170895192349759880}
+  - component: {fileID: 3184165328815406247}
   m_Layer: 0
   m_Name: Trace
   m_TagString: Untagged
@@ -91,7 +92,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.30540466
+        value: 0.08251953
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -100,7 +101,7 @@ LineRenderer:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 0.872973
+        value: 0.38268143
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -137,7 +138,7 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -151,3 +152,23 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &3184165328815406247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225384823623966019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6240dba5f55b7e4f9cce65548390fac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BeamTracer
+  muzzle: {fileID: 1652303646012293200, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
+  width: 0.1
+  color: {r: 0, g: 1, b: 1, a: 1}
+  splineResolution: 16
+  controlOffset: 3
+  controlDirection: {x: 0, y: 0, z: 0}
+  useRandomSpline: 1
+  randomOffsetMagnitude: 3

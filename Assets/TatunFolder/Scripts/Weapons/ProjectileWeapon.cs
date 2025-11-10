@@ -1,9 +1,6 @@
 using UnityEngine;
 
-/// <summary>
-/// Projectile-based weapon that spawns physical projectiles (rockets, plasma, etc.).
-/// Perfect for Descent-style missile and plasma weapons.
-/// </summary>
+
 public class ProjectileWeapon : WeaponBase
 {
     [Header("Projectile")]
