@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -20,121 +21,66 @@ public class HitScanWeapon : WeaponBase
     [Tooltip("How long tracer visual lasts")]
     public float tracerLifetime = 0.2f;
 
-    //public override void Fire(Ray aimRay)
-    //{
-    //    if (!CanFire()) return;
-    //    NoteFire();
-
-    //    Debug.Log($"[HitScanWeapon] Fire called. muzzle={(muzzle == null ? "null" : muzzle.name)}, tracerPrefab={(tracerPrefab == null ? "null" : tracerPrefab.name)}, impactPrefab={(impactPrefab == null ? "null" : impactPrefab.name)}");
-
-    //    Ray ray = aimRay;
-    //    if (Physics.Raycast(ray, out var hit, range, hitMask, QueryTriggerInteraction.Ignore))
-    //    {
-    //        Debug.Log($"[HitScanWeapon] Ray hit {hit.collider.name} at {hit.point}");
-    //        var dmg = hit.collider.GetComponent<IDamageable>();
-    //        if (dmg != null)
-    //        {
-    //            dmg.TakeDamage(damage);
-    //            Debug.Log($"[HitScanWeapon] Applied {damage} damage to {hit.collider.name}");
-    //        }
-
-    //        if (impactPrefab != null)
-    //            Instantiate(impactPrefab, hit.point, Quaternion.LookRotation(hit.normal));
-
-    //        if (tracerPrefab != null && muzzle != null)
-    //        {
-    //            var dir = (hit.point - muzzle.position);
-    //            var t = Instantiate(tracerPrefab, muzzle.position, Quaternion.LookRotation(dir));
-
-    //            // If tracer prefab contains BeamTracer, call to stretch it
-    //            var beam = t.GetComponent<BeamTracer>();
-    //            if (beam != null)
-    //            {
-    //                beam.Setup(muzzle.position, hit.point, tracerLifetime);
-    //            }
-    //            else
-    //            {
-    //                // fallback: no tracer, just destroy after lifetime
-    //                Destroy(t, tracerLifetime);
-    //            }
-    //        }
-    //        else if (tracerPrefab == null)
-    //        {
-    //            Debug.Log("[HitScanWeapon] tracerPrefab is null - no tracer spawned");
-    //        }
-    //        else
-    //        {
-    //            Debug.Log("[HitScanWeapon] muzzle is null - cannot spawn tracer");
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("[HitScanWeapon] Raycast did not hit anything");
-    //        if (tracerPrefab != null && muzzle != null)
-    //        {
-    //            var t = Instantiate(tracerPrefab, muzzle.position, Quaternion.LookRotation(ray.direction));
-    //            var beam = t.GetComponent<BeamTracer>();
-    //            if (beam != null)
-    //            {
-    //                // extend tracer a fixed distance forward when missing, if using BeamTracer
-    //                beam.Setup(muzzle.position, muzzle.position + ray.direction * range, tracerLifetime);
-    //            }
-    //            else
-    //            {
-    //                Destroy(t, tracerLifetime);
-    //            }
-    //        }
-    //        else if (tracerPrefab == null)
-    //        {
-    //            Debug.Log("[HitScanWeapon] tracerPrefab is null - no tracer spawned on miss");
-    //        }
-    //        else
-    //        {
-    //            Debug.Log("[HitScanWeapon] muzzle is null - cannot spawn tracer on miss");
-    //        }
-    //    }
-    //}
+    [Header("Multi-muzzle")]
+    [Tooltip("Offsets from center aim for each muzzle (local screen units, e.g. -0.2 = left, 0.2 = right)")]
+    public List<Vector2> aimOffsets = new List<Vector2>(); // e.g. (-0.2,0), (0.2,0) for dual lasers
 
     public override void Fire(Ray aimRay)
     {
         if (!CanFire()) return;
         NoteFire();
 
-        Ray ray = aimRay;
-        Vector3 start = muzzle != null ? muzzle.position : ray.origin;
-        Vector3 end;
-
-        if (Physics.Raycast(ray, out var hit, range, hitMask, QueryTriggerInteraction.Ignore))
+        // If no muzzles, fallback to old logic
+        if (muzzles == null || muzzles.Count == 0)
         {
-            end = hit.point;
-
-            var dmg = hit.collider.GetComponent<IDamageable>();
-            if (dmg != null)
-                dmg.TakeDamage(damage);
-
-            if (impactPrefab != null)
-                Instantiate(impactPrefab, hit.point, Quaternion.LookRotation(hit.normal));
-        }
-        else
-        {
-            end = start + ray.direction * range;
+            
+            return;
         }
 
-        if (tracerPrefab != null && muzzle != null)
+        for (int i = 0; i < muzzles.Count; i++)
         {
-            var t = Instantiate(tracerPrefab, start, Quaternion.LookRotation(end - start));
-            var beam = t.GetComponent<BeamTracer>();
-            if (beam != null)
+            var muzzle = muzzles[i];
+            Vector2 offset = (i < aimOffsets.Count) ? aimOffsets[i] : Vector2.zero;
+
+            // Offset the aim ray for this muzzle
+            Ray ray = GetOffsetRay(aimRay, offset);
+
+            Vector3 start = muzzle != null ? muzzle.position : ray.origin;
+            Vector3 end;
+
+            if (Physics.Raycast(ray, out var hit, range, hitMask, QueryTriggerInteraction.Ignore))
             {
-                // Use BeamTracer's inspector settings for the spline
-                beam.SetupSpline(start, end, tracerLifetime);
+                end = hit.point;
+                var dmg = hit.collider.GetComponent<IDamageable>();
+                if (dmg != null) dmg.TakeDamage(damage);
+                if (impactPrefab != null)
+                    Instantiate(impactPrefab, hit.point, Quaternion.LookRotation(hit.normal));
             }
             else
             {
-                Destroy(t, tracerLifetime);
+                end = start + ray.direction * range;
+            }
+
+            if (tracerPrefab != null && muzzle != null)
+            {
+                var t = Instantiate(tracerPrefab, start, Quaternion.LookRotation(end - start));
+                var beam = t.GetComponent<BeamTracer>();
+                if (beam != null)
+                    beam.SetupSpline(start, end, tracerLifetime);
+                else
+                    Destroy(t, tracerLifetime);
             }
         }
     }
 
+    // Helper: Offset the aim ray in screen space
+    Ray GetOffsetRay(Ray baseRay, Vector2 screenOffset)
+    {
+        if (aimCamera == null || screenOffset == Vector2.zero)
+            return baseRay;
 
+        Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+        Vector2 screenPos = screenCenter + new Vector2(screenOffset.x * Screen.width, screenOffset.y * Screen.height);
+        return aimCamera.ScreenPointToRay(screenPos);
+    }
 }

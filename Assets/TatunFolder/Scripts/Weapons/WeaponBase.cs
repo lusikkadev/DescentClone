@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -8,7 +10,7 @@ public abstract class WeaponBase : MonoBehaviour
 {
     [Header("Common")]
     [Tooltip("Where projectiles / tracers spawn (can be camera or ship)")]
-    public Transform muzzle;
+    public List<Transform> muzzles = new List<Transform>();
     
     [Tooltip("Minimum time between shots in seconds")]
     public float cooldown = 0.1f;

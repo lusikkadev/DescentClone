@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 
 public class ProjectileWeapon : WeaponBase
@@ -13,20 +14,42 @@ public class ProjectileWeapon : WeaponBase
     [Tooltip("Forward offset from muzzle to avoid self-collision")]
     public float spawnOffset = 0.5f;
 
+    [Header("Multi-muzzle")]
+    [Tooltip("Offsets from center aim for each muzzle (local screen units, e.g. -0.2 = left, 0.2 = right)")]
+    public List<Vector2> aimOffsets = new List<Vector2>();
+
     public override void Fire(Ray aimRay)
     {
-        if (!CanFire() || projectilePrefab == null || muzzle == null) return;
+        if (!CanFire() || projectilePrefab == null || muzzles == null || muzzles.Count == 0) return;
         NoteFire();
 
-        Vector3 spawnPos = muzzle.position + muzzle.forward * spawnOffset;
-        Quaternion spawnRot = Quaternion.LookRotation(aimRay.direction);
-
-        var go = Instantiate(projectilePrefab, spawnPos, spawnRot);
-        var proj = go.GetComponent<Projectile>();
-        if (proj != null)
+        for (int i = 0; i < muzzles.Count; i++)
         {
-            Vector3 inherit = ownerRb != null ? ownerRb.linearVelocity : Vector3.zero;
-            proj.Initialize(aimRay.direction.normalized * projectileSpeed, inherit, ownerRb, hitMask);
+            var muzzle = muzzles[i];
+            Vector2 offset = (i < aimOffsets.Count) ? aimOffsets[i] : Vector2.zero;
+            Ray ray = GetOffsetRay(aimRay, offset);
+
+            Vector3 spawnPos = muzzle.position + muzzle.forward * spawnOffset;
+            Quaternion spawnRot = Quaternion.LookRotation(ray.direction);
+
+            var go = Instantiate(projectilePrefab, spawnPos, spawnRot);
+            var proj = go.GetComponent<Projectile>();
+            if (proj != null)
+            {
+                Vector3 inherit = ownerRb != null ? ownerRb.linearVelocity : Vector3.zero;
+                proj.Initialize(ray.direction.normalized * projectileSpeed, inherit, ownerRb, hitMask);
+            }
         }
+    }
+
+    // Helper: Offset the aim ray in screen space
+    Ray GetOffsetRay(Ray baseRay, Vector2 screenOffset)
+    {
+        if (aimCamera == null || screenOffset == Vector2.zero)
+            return baseRay;
+
+        Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+        Vector2 screenPos = screenCenter + new Vector2(screenOffset.x * Screen.width, screenOffset.y * Screen.height);
+        return aimCamera.ScreenPointToRay(screenPos);
     }
 }

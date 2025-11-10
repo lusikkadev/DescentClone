@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3184751feb3aaa489f173f63c71ae17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileWeapon
-  muzzle: {fileID: 4149583110551100968}
+  muzzles:
+  - {fileID: 4149583110551100968}
   cooldown: 0.5
   hitMask:
     serializedVersion: 2
@@ -53,6 +54,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 5622990059433253847, guid: dbd816b929134c64a9329ec1120806fd, type: 3}
   projectileSpeed: 80
   spawnOffset: 0.5
+  aimOffsets: []
 --- !u!1 &6288896054889238755
 GameObject:
   m_ObjectHideFlags: 0
