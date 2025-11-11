@@ -263,7 +263,7 @@ MonoBehaviour:
   Projectile: {fileID: 5447639557416043054, guid: f1e380c6079395948bd614b1f83d9a39, type: 3}
   firingInterval: 3
   projectileSpeed: 500
-  health: 50
+  health: 15
 --- !u!65 &4947517296732638960
 BoxCollider:
   m_ObjectHideFlags: 0

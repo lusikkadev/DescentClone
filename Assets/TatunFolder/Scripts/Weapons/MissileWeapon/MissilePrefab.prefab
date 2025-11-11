@@ -29434,7 +29434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   lifeTime: 10
-  damage: 50
+  damage: 20
   explosionEffect: {fileID: 6970749452979738344}
   trailEffect: {fileID: 3280869742761135621}
 --- !u!1 &7095905520785442096
