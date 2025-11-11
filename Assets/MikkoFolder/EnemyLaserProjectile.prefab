@@ -99,6 +99,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2111339693025593454}
   - component: {fileID: -5917446008369456302}
+  - component: {fileID: 4983838471800067796}
+  - component: {fileID: 4343584085532582160}
   m_Layer: 6
   m_Name: EnemyLaserProjectile
   m_TagString: Untagged
@@ -141,7 +143,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
@@ -149,3 +151,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &4983838471800067796
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5447639557416043054}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.09299492, y: 0.08858602, z: 0.769121}
+  m_Center: {x: -0.011981104, y: 0.0026021358, z: -0.005023986}
+--- !u!114 &4343584085532582160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5447639557416043054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b85da4bc2e3c6ba439a5a97c72bd8076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Impact
+  lifeTime: 3

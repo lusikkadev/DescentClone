@@ -237,8 +237,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.49001, y: 1.077, z: 9.336}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2812743633420204466}
   - {fileID: 5404092078916069831}
@@ -262,7 +262,7 @@ MonoBehaviour:
   firingPosition: {fileID: 8876813651180673534}
   Projectile: {fileID: 5447639557416043054, guid: f1e380c6079395948bd614b1f83d9a39, type: 3}
   firingInterval: 3
-  projectileSpeed: 5
+  projectileSpeed: 500
   health: 50
 --- !u!65 &4947517296732638960
 BoxCollider:

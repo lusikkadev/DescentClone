@@ -59,7 +59,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fc39887c4e350644ba215e9a30d6c548, type: 2}
+  - {fileID: 2100000, guid: 8765829b4c1b820409385ae53384fb25, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,8 +91,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.08251953
+        time: 0.0044247787
+        value: 0.0873785
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -101,7 +101,7 @@ LineRenderer:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 0.38268143
+        value: 0.3681257
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -165,8 +165,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BeamTracer
   muzzle: {fileID: 1652303646012293200, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
-  width: 0.1
-  color: {r: 0, g: 1, b: 1, a: 1}
+  width: 0.3
+  color: {r: 1, g: 0.39565724, b: 0, a: 1}
   splineResolution: 16
   controlOffset: 3
   controlDirection: {x: 0, y: 0, z: 0}

@@ -15062,7 +15062,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   range: 200
-  damage: 10
+  damage: 1
   impactPrefab: {fileID: 1337198075554910, guid: c9daee2145fff4047a3df7e642407c3d, type: 3}
   tracerPrefab: {fileID: 1225384823623966019, guid: 8852c4be506ddc54ea09ecfaa962730a, type: 3}
   tracerLifetime: 0.3

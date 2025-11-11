@@ -406,7 +406,7 @@ MonoBehaviour:
     m_Reference: {fileID: 5814192345092058734, guid: a43678ea1e7566c448ff4308f3a86330, type: 3}
   maxForwardSpeed: 30
   maxStrafeSpeed: 30
-  maxVerticalSpeed: 15
+  maxVerticalSpeed: 30
   acceleration: 100
   driftDecay: 40
   inputDeadzone: 0.1
