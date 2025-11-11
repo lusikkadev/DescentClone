@@ -54,7 +54,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 5622990059433253847, guid: dbd816b929134c64a9329ec1120806fd, type: 3}
   projectileSpeed: 80
   spawnOffset: 0.5
-  aimOffsets: []
+  aimOffsets:
+  - {x: -0.02, y: 0}
 --- !u!1 &6288896054889238755
 GameObject:
   m_ObjectHideFlags: 0

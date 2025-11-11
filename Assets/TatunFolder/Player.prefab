@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8952808367840640961}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Weapon Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 8321008031381616792}
   - component: {fileID: 8501163429812442979}
   - component: {fileID: 7697879536932596659}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -232,6 +232,7 @@ MonoBehaviour:
   weapons:
   - {fileID: 2169571422202563499, guid: f925fc0eb2e684d49b41ddf1b289f53c, type: 3}
   - {fileID: 7446204508204908133, guid: 312369fd417c5a74ab51038eb19f8ac7, type: 3}
+  - {fileID: 7446204508204908133, guid: 99b392124137236488e5a00af311ffab, type: 3}
   handleInput: 1
   fireAction: {fileID: 8281635707354912270, guid: a43678ea1e7566c448ff4308f3a86330, type: 3}
   nextWeapon: {fileID: 5963526400164629005, guid: a43678ea1e7566c448ff4308f3a86330, type: 3}
@@ -251,9 +252,9 @@ GameObject:
   - component: {fileID: 2012731517476903078}
   - component: {fileID: 2257738071151159198}
   - component: {fileID: 2346970768239039846}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

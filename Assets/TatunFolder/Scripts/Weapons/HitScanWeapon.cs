@@ -25,6 +25,9 @@ public class HitScanWeapon : WeaponBase
     [Tooltip("Offsets from center aim for each muzzle (local screen units, e.g. -0.2 = left, 0.2 = right)")]
     public List<Vector2> aimOffsets = new List<Vector2>(); // e.g. (-0.2,0), (0.2,0) for dual lasers
 
+    [Header("Muzzle Flash")]
+    public List<ParticleSystem> muzzleFlashes;
+
     public override void Fire(Ray aimRay)
     {
         if (!CanFire()) return;
@@ -39,6 +42,7 @@ public class HitScanWeapon : WeaponBase
 
         for (int i = 0; i < muzzles.Count; i++)
         {
+            muzzleFlashes[i].Play();
             var muzzle = muzzles[i];
             Vector2 offset = (i < aimOffsets.Count) ? aimOffsets[i] : Vector2.zero;
 

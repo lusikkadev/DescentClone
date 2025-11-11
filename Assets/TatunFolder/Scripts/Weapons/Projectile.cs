@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
@@ -8,6 +9,8 @@ public class Projectile : MonoBehaviour
     Rigidbody rb;
     Rigidbody ownerRb;
     LayerMask hitMask = ~0;
+    [SerializeField] ParticleSystem explosionEffect;
+    [SerializeField] ParticleSystem trailEffect;
 
     void Awake()
     {
@@ -17,6 +20,7 @@ public class Projectile : MonoBehaviour
 
     public void Initialize(Vector3 initialVelocity, Vector3 inheritVelocity, Rigidbody owner, LayerMask mask)
     {
+        trailEffect?.Play();
         ownerRb = owner;
         hitMask = mask;
         rb.linearVelocity = inheritVelocity + initialVelocity;
@@ -35,12 +39,33 @@ public class Projectile : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (((1 << collision.gameObject.layer) & hitMask) == 0) return;
-
+        rb.linearVelocity = Vector3.zero;
+        MeshRenderer mr = GetComponentInChildren<MeshRenderer>();
+        mr.enabled = false;
         // damage
         var dmg = collision.collider.GetComponent<IDamageable>();
         if (dmg != null) dmg.TakeDamage(damage);
 
-        // add sfx etc
+        explosionEffect?.Play();
+        StartCoroutine(DestroyAfterEffect());
+    }
+
+    IEnumerator DestroyAfterEffect()
+    {
+        // stop trail
+        if (trailEffect != null)
+        {
+            trailEffect.transform.parent = null;
+            var trailMain = trailEffect.main;
+            trailMain.stopAction = ParticleSystemStopAction.Destroy;
+            trailEffect.Stop();
+        }
+        // wait for explosion effect to finish
+        if (explosionEffect != null)
+        {
+            var explosionMain = explosionEffect.main;
+            yield return new WaitForSeconds(explosionMain.duration + explosionMain.startLifetime.constantMax);
+        }
         Destroy(gameObject);
     }
 }
