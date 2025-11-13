@@ -32,7 +32,8 @@ public class HitScanWeapon : WeaponBase
     [Header("Sequential Firing")]
     [SerializeField] bool sequentialFiring = false;
     [Range(0f, 1f)]
-    [SerializeField] float sequentialFireDelay = 0.1f;
+    //[SerializeField] float sequentialFireDelay = 0.1f;
+    [SerializeField] int nextMuzzleIndex = 0;
 
     [Header("Audio")]
     [SerializeField] AudioSource gun_Audio;
@@ -54,7 +55,8 @@ public class HitScanWeapon : WeaponBase
 
         if (sequentialFiring)
         {
-            StartCoroutine(FireSequentially(aimRay));
+            FireAllMuzzles(nextMuzzleIndex, aimRay);
+            nextMuzzleIndex = (nextMuzzleIndex + 1) % muzzles.Count;
         }
         else
         {
@@ -66,17 +68,17 @@ public class HitScanWeapon : WeaponBase
         }
     }
 
-    private IEnumerator FireSequentially(Ray aimRay)
-    {
-        for (int i = 0; i < muzzles.Count; i++)
-        {
-            FireAllMuzzles(i, aimRay);
-            if (i < muzzles.Count - 1 && sequentialFireDelay > 0f)
-            {
-                yield return new WaitForSeconds(sequentialFireDelay);
-            }
-        }
-    }
+    //private IEnumerator FireSequentially(Ray aimRay)
+    //{
+    //    for (int i = 0; i < muzzles.Count; i++)
+    //    {
+    //        FireAllMuzzles(i, aimRay);
+    //        if (i < muzzles.Count - 1 && sequentialFireDelay > 0f)
+    //        {
+    //            yield return new WaitForSeconds(sequentialFireDelay);
+    //        }
+    //    }
+    //}
 
 
     private void FireAllMuzzles(int i, Ray aimRay)
