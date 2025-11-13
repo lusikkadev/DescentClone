@@ -15075,7 +15075,6 @@ MonoBehaviour:
   - {fileID: 182036462048679838}
   - {fileID: 7346798840761858577}
   sequentialFiring: 1
-  sequentialFireDelay: 0.3
   nextMuzzleIndex: 0
   gun_Audio: {fileID: 0}
   shootSound: {fileID: 8300000, guid: 38f5795d140749844a854b82332d9c95, type: 3}
@@ -15094,7 +15093,7 @@ AudioSource:
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 1.5
   Loop: 0
   Mute: 0
   Spatialize: 1
