@@ -81,6 +81,12 @@ public class PlayerController : MonoBehaviour
         if (rb == null) return;
         float dt = Time.fixedDeltaTime;
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            //Reset scene
+            UnityEngine.SceneManagement.SceneManager.LoadScene(
+                UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        }
 
         // Read inputs
         Vector2 leftStick = ReadVector2(translateAction);
