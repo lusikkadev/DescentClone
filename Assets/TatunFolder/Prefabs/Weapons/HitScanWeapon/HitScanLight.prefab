@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4438944060057445277}
   - component: {fileID: 3158099542980566984}
   - component: {fileID: 4556362286811377194}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HitScanLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
