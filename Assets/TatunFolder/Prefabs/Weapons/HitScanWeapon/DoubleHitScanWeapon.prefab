@@ -14972,7 +14972,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -15076,9 +15076,6 @@ MonoBehaviour:
   - {fileID: 7346798840761858577}
   sequentialFiring: 1
   nextMuzzleIndex: 0
-  gun_Audio: {fileID: 0}
-  shootSound: {fileID: 8300000, guid: 38f5795d140749844a854b82332d9c95, type: 3}
-  impactSound: {fileID: 0}
 --- !u!82 &2673590885405795039
 AudioSource:
   m_ObjectHideFlags: 0
