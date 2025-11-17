@@ -25,10 +25,6 @@ public class ProjectileWeapon : WeaponBase
     [Range(0f, 1f)]
     [SerializeField] float sequentialFireDelay = 0.1f;
 
-    [Header("Audio")]
-    [SerializeField] AudioSource gun_Audio;
-    [SerializeField] AudioClip shootSound;
-    [SerializeField] AudioClip impactSound;
 
     public override void Fire(Ray aimRay)
     {

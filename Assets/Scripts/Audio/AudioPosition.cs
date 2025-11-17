@@ -16,6 +16,7 @@ public class AudioPosition : MonoBehaviour
     [SerializeField] private float originalVolume;
 
 
+
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -61,13 +62,13 @@ public class AudioPosition : MonoBehaviour
     {
         playAtPosition = true;
         transformToFollow = null;
-        transform.position = Vector3.zero;
+        transform.position = UnityEngine.Vector3.zero;
         audioSource.clip = clip;
         audioSource.spatialBlend = 0f;
         audioSource.Play();
     }
 
-    public void PlayAtPosition(AudioClip clip, Vector3 pos)
+    public void PlayAtPosition(AudioClip clip, UnityEngine.Vector3 pos)
     {
         playAtPosition = true;
         transformToFollow = null;

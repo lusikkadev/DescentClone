@@ -35,17 +35,9 @@ public class HitScanWeapon : WeaponBase
     //[SerializeField] float sequentialFireDelay = 0.1f;
     [SerializeField] int nextMuzzleIndex = 0;
 
-    [Header("Audio")]
-    [SerializeField] AudioSource gun_Audio;
-    [SerializeField] AudioClip shootSound;
-    [SerializeField] AudioClip impactSound;
-
     private void Awake()
     {
-        if (gun_Audio == null)
-        {
-            gun_Audio = GetComponent<AudioSource>();
-        }
+
     }
 
     public override void Fire(Ray aimRay)
@@ -68,29 +60,22 @@ public class HitScanWeapon : WeaponBase
         }
     }
 
-    //private IEnumerator FireSequentially(Ray aimRay)
-    //{
-    //    for (int i = 0; i < muzzles.Count; i++)
-    //    {
-    //        FireAllMuzzles(i, aimRay);
-    //        if (i < muzzles.Count - 1 && sequentialFireDelay > 0f)
-    //        {
-    //            yield return new WaitForSeconds(sequentialFireDelay);
-    //        }
-    //    }
-    //}
-
 
     private void FireAllMuzzles(int i, Ray aimRay)
     {
 
         // FX
         muzzleFlashes[i].Play();
-        if (gun_Audio != null && shootSound != null)
+        Transform pos = gameObject.transform;
+        if (sequentialFiring)
         {
-            gun_Audio.PlayOneShot(shootSound, 0.7f);
+            AudioFW.Play(id: "hitscanshotSequential", pos);
         }
-        var muzzle = muzzles[i];
+        else
+        {
+            AudioFW.Play(id: "hitscanshot", pos);
+        }
+            var muzzle = muzzles[i];
         Vector2 offset = (i < aimOffsets.Count) ? aimOffsets[i] : Vector2.zero;
         // Offset the aim ray for this muzzle
         Ray ray = GetOffsetRay(aimRay, offset);
