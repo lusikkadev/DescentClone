@@ -5970,6 +5970,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 388179748992274948, guid: 96fbcf5db95e5e24fbdcab9d1bf05ac7, type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3956789569796102823, guid: 96fbcf5db95e5e24fbdcab9d1bf05ac7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 227.7074
@@ -6016,7 +6020,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8851630611775777559, guid: 96fbcf5db95e5e24fbdcab9d1bf05ac7, type: 3}
       propertyPath: m_FOVAxisMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8851630611775777559, guid: 96fbcf5db95e5e24fbdcab9d1bf05ac7, type: 3}
       propertyPath: m_CullingMask.m_Bits
