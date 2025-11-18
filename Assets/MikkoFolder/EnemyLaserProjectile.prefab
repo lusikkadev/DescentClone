@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85da4bc2e3c6ba439a5a97c72bd8076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Impact
-  lifeTime: 3
+  lifeTime: 1
 --- !u!114 &1843750799334472348
 MonoBehaviour:
   m_ObjectHideFlags: 0

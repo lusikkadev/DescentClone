@@ -397,6 +397,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1310,6 +1314,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2148,6 +2156,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2320,6 +2332,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2840,6 +2856,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3078,6 +3098,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3149,6 +3173,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3210,6 +3238,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3276,6 +3308,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3448,6 +3484,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3839,6 +3879,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4055,6 +4099,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4639,6 +4687,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4811,6 +4863,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4872,6 +4928,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5155,6 +5215,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5669,6 +5733,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5730,6 +5798,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 882924983}
+    - target: {fileID: 9188739992261292110, guid: 53ac2fb6f5f17ad4dabf1b023e249f05, type: 3}
+      propertyPath: projectileSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

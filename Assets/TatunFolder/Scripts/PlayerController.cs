@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
         if (rb == null) return;
         float dt = Time.fixedDeltaTime;
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             //Reset scene
             UnityEngine.SceneManagement.SceneManager.LoadScene(

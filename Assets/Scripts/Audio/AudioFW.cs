@@ -292,7 +292,7 @@ public class AudioFW : MonoBehaviour
         {
             if (!_instance)
             {
-                var a = GameObject.FindObjectsOfType<AudioFW>();
+                var a = GameObject.FindObjectsByType<AudioFW>(FindObjectsSortMode.None);
                 if (a.Length == 0)
                     Debug.LogWarning("No AudioFW in scene");
                 else if (a.Length > 1)
