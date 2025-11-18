@@ -32,6 +32,11 @@ public class PlayerController : MonoBehaviour
     public float angularAcceleration = 400f;
     public float rotationSmooth = 12f;
     public bool invertPitch = false;
+    // Roll stabilize
+    float rollInputLastTime = 0f;
+    bool isStabilizingRoll = false;
+    float rollStabilizeDelay = 0.2f;
+    float rollStabilizeSpeed = 1.5f;
 
     [Header("Collision tuning")]
     [Range(0f, 1f)]
@@ -118,17 +123,6 @@ public class PlayerController : MonoBehaviour
 
         if (hasTransInput)
         {
-            // Snap on initial input // Not working well
-            //if (!wasTransInput)
-            //{
-            //    localVelocity = targetLocalVelocity;
-            //}
-            //else
-            //{
-            //    localVelocity = Vector3.MoveTowards(localVelocity, targetLocalVelocity, acceleration * dt);
-            //}
-
-
             localVelocity = Vector3.MoveTowards(localVelocity, targetLocalVelocity, acceleration * dt);
 
             rb.linearVelocity = transform.TransformDirection(localVelocity);
@@ -161,6 +155,45 @@ public class PlayerController : MonoBehaviour
         float angAccelRad = angularAcceleration * Mathf.Deg2Rad;
         rb.angularVelocity = Vector3.MoveTowards(rb.angularVelocity, targetWorldAngVel, angAccelRad * dt);
 
+        if (Mathf.Abs(rollInput) > inputDeadzone)
+        {
+            rollInputLastTime = Time.time;
+            isStabilizingRoll = false;
+        }
+        else if (!isStabilizingRoll && Time.time - rollInputLastTime > rollStabilizeDelay)
+        {
+            isStabilizingRoll = true;
+        }
+
+        if (isStabilizingRoll)
+        {
+            StabilizeRoll(dt);
+        }
+    }
+
+    void StabilizeRoll(float dt)
+    {
+        // get current local roll angle in degrees
+        float currentRoll = transform.localEulerAngles.z;
+        // normalize to -180..180
+        if (currentRoll > 180f) currentRoll -= 360f;
+
+        // 45 degree segments, find nearest
+        float targetRoll = Mathf.Round(currentRoll / 90f) * 90f;
+
+        // Smoothly rotate towards target roll
+        float newRoll = Mathf.LerpAngle(currentRoll, targetRoll, rollStabilizeSpeed * dt);
+
+        // Apply new roll
+        Vector3 euler = transform.localEulerAngles;
+        euler.z = newRoll;
+        transform.localEulerAngles = euler;
+
+        // Stop if close enough
+        if (Mathf.Abs(Mathf.DeltaAngle(newRoll, targetRoll)) < 0.5f)
+        {
+            isStabilizingRoll = false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

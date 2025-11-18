@@ -5911,23 +5911,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1652303646012293200, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.057553653
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1652303646012293200, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0017480479
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1652303646012293200, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.99786437
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1652303646012293200, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.030842597
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1652303646012293200, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1652303646012293200, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -5940,6 +5940,10 @@ PrefabInstance:
     - target: {fileID: 2428791563369030847, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
       propertyPath: field of view
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3072056636429183748, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
+      propertyPath: m_Antialiasing
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3072056636429183748, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
       propertyPath: 'm_Cameras.Array.data[1]'
