@@ -113,7 +113,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BeamTracer
   muzzle: {fileID: 1652303646012293200, guid: fb0768618db8d58468369c1de6ef7f43, type: 3}
   width: 0.3
-  color: {r: 1, g: 0.39565724, b: 0, a: 1}
+  color: {r: 1, g: 1, b: 1, a: 1}
   splineResolution: 16
   controlOffset: 3
   controlDirection: {x: 0, y: 0, z: 0}
