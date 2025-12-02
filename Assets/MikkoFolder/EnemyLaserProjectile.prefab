@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 61fd28c6e02955d4c97d369b209796e4, type: 2}
+  - {fileID: -876546973899608171, guid: 896d70b6273be434c889225acfd53620, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85da4bc2e3c6ba439a5a97c72bd8076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Impact
-  lifeTime: 1
+  lifeTime: 6
 --- !u!114 &1843750799334472348
 MonoBehaviour:
   m_ObjectHideFlags: 0

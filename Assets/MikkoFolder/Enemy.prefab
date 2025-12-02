@@ -308,6 +308,10 @@ MonoBehaviour:
   Projectile: {fileID: 5447639557416043054, guid: f1e380c6079395948bd614b1f83d9a39, type: 3}
   firingInterval: 5
   projectileSpeed: 500
+  projectileLifetime: 0
+  health: 50
+  detectionRange: 45
+  detectionAngle: 70
 --- !u!82 &6209847387364684560
 AudioSource:
   m_ObjectHideFlags: 0
