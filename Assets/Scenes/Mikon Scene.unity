@@ -3365,6 +3365,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5468770143737165864, guid: 936f9c57cb208bd47b1b78c58cefb8f3, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5468770143737165864, guid: 936f9c57cb208bd47b1b78c58cefb8f3, type: 3}
+      propertyPath: m_LinearDamping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383842480311289770, guid: 936f9c57cb208bd47b1b78c58cefb8f3, type: 3}
+      propertyPath: playerPivotRangeTarget
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8779730902617207634, guid: 936f9c57cb208bd47b1b78c58cefb8f3, type: 3}
       propertyPath: m_Name
       value: Enemy (1)

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal.Internal;
 using static UnityEditor.PlayerSettings;
 
 public class BasicEnemy : MonoBehaviour
@@ -15,12 +16,20 @@ public class BasicEnemy : MonoBehaviour
     public float detectionAngle = 45f;
     public float alarmRange = 30;
     Quaternion rotation;
+    public float playerPivotRangeTarget;
+    Rigidbody rb;
     float distanceToPlayer;
     float timer;
+
+    float PivotLeftRight;
+
     bool detectPlayer = false;
     void Start()
     {
         Target = GameObject.FindAnyObjectByType<PlayerController>().transform;
+        rb = GetComponent<Rigidbody>();
+        PivotLeftRight = Random.Range(0, 1);
+        
     }
 
     // Update is called once per frame
@@ -32,6 +41,7 @@ public class BasicEnemy : MonoBehaviour
         searchForPlayer();
 
         if (detectPlayer) {
+            //Wake up nearby AI
             var nearbyAI = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (var ai in nearbyAI) {
                 if(Vector3.Distance(this.transform.position, ai.transform.position) < alarmRange) {
@@ -39,8 +49,16 @@ public class BasicEnemy : MonoBehaviour
                 }
 
             }
-                //Rotating around target, kinda broken gonna figure out another way.
-                //transform.RotateAround(Target.position, Vector3.up, movementspeed * Time.deltaTime);
+            if (distanceToPlayer > playerPivotRangeTarget) {
+                var forwardVector = rotation * Vector3.forward;
+                rb.AddForce(forwardVector * movementspeed, ForceMode.Impulse);
+            }
+            if (distanceToPlayer < playerPivotRangeTarget) {
+                var backwardsVector = rotation * Vector3.back;
+                rb.AddForce(backwardsVector * movementspeed, ForceMode.Impulse);
+            }
+                
+                transform.RotateAround(Target.position, Vector3.up, movementspeed * Time.deltaTime);
                 transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * dampening);
                 timer += Time.deltaTime;
                 while (timer > firingInterval) {
