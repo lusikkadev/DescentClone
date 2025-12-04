@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 1311721062181664428}
   - component: {fileID: 9188739992261292110}
   - component: {fileID: 4947517296732638960}
+  - component: {fileID: 2979384013734996381}
   m_Layer: 0
   m_Name: EnemyCopy
   m_TagString: Untagged
@@ -257,13 +258,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c1bf3a059ddf5d4286d18c742acf87f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasicEnemyCopy
-  Target: {fileID: 0}
-  dampening: 4
-  firingPosition: {fileID: 8876813651180673534}
-  Projectile: {fileID: 5447639557416043054, guid: f1e380c6079395948bd614b1f83d9a39, type: 3}
-  firingInterval: 3
-  projectileSpeed: 500
+  firingPoint: {fileID: 8876813651180673534}
+  projectilePrefab: {fileID: 5447639557416043054, guid: f1e380c6079395948bd614b1f83d9a39, type: 3}
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 0
   health: 15
+  detectionRange: 150
+  detectionAngle: 120
+  loseInterestRange: 220
+  timeToForget: 5
+  maxSpeed: 20
+  maxForce: 60
+  damping: 3
+  patrolRadius: 40
+  patrolPointTolerance: 1.5
+  patrolWaitMin: 1
+  patrolWaitMax: 3
+  desiredDistance: 18
+  distanceTolerance: 1.5
+  orbitStrength: 0.8
+  orbitSpeed: 1.6
+  orbitRandomSeed: 0
+  sphereCastRadius: 0.6
+  avoidanceDistance: 6
+  avoidanceWeight: 12
+  avoidanceSamples: 7
+  fireInterval: 0.8
+  projectileSpeed: 20
+  firingConeAngle: 12
 --- !u!65 &4947517296732638960
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -285,3 +311,30 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.2, y: 1.2, z: 1.7164551}
   m_Center: {x: 0, y: 0, z: 0.25822753}
+--- !u!54 &2979384013734996381
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8779730902617207634}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 64
+  m_CollisionDetection: 0
