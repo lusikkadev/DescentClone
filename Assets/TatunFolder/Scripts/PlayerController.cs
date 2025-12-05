@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,10 +22,15 @@ public class PlayerController : MonoBehaviour
     public InputActionProperty upAction;
     [Tooltip("Left trigger (Float 0..1): strafe down (vertical)")]
     public InputActionProperty downAction;
+    [Tooltip("Dodge / Boost action (Button)")]
+    public InputActionReference dodgeAction;
 
     [Header("Translation")]
     public float maxForwardSpeed = 30f;
     public float maxStrafeSpeed = 30f;
+    public float dodgeMultiplier = 3f;
+    public float dodgeCooldown = 1f;
+    public bool canDodge = true;
     public float maxVerticalSpeed = 15f;
     public float acceleration = 100f;
     public float driftDecay = 40f;
@@ -76,6 +82,12 @@ public class PlayerController : MonoBehaviour
         rollAction.action?.Enable();
         upAction.action?.Enable();
         downAction.action?.Enable();
+        
+        dodgeAction?.action?.Enable();
+        if (dodgeAction?.action !=null)
+        {
+            dodgeAction.action.performed += OnDodge;
+        }
     }
 
     void OnDisable()
@@ -85,6 +97,13 @@ public class PlayerController : MonoBehaviour
         rollAction.action?.Disable();
         upAction.action?.Disable();
         downAction.action?.Disable();
+        
+
+        if (dodgeAction?.action != null)
+        {
+            dodgeAction.action.performed -= OnDodge;
+            dodgeAction?.action?.Disable();
+        }
     }
 
     void FixedUpdate()
@@ -260,5 +279,34 @@ public class PlayerController : MonoBehaviour
     {
         if (prop == null || prop.action == null) return 0f;
         try { return prop.action.ReadValue<float>(); } catch { return 0f; }
+    }
+
+    // Dodge / Boost action towards move direction using dodgeMultiplier for speed
+    public void OnDodge(InputAction.CallbackContext context)
+    {
+        if (context.performed && canDodge)
+        {
+            canDodge = false;
+            StartCoroutine(DodgeCooldown());
+            Vector2 leftStick = ReadVector2(translateAction);
+            float strafe = leftStick.x;
+            float throttle = leftStick.y;
+            Vector3 dodgeDirection = new Vector3(strafe, 0f, throttle).normalized;
+            //if (dodgeDirection.sqrMagnitude < 1e-4f)
+            //{
+            //    // No input, dodge back
+
+            //    dodgeDirection = Vector3.back;
+            //}
+            Vector3 dodgeVelocity = dodgeDirection * maxStrafeSpeed * dodgeMultiplier;
+            localVelocity = dodgeVelocity;
+            rb.linearVelocity = transform.TransformDirection(localVelocity);
+        }
+    }
+
+    IEnumerator DodgeCooldown()
+    {
+        yield return new WaitForSeconds(dodgeCooldown);
+        canDodge = true;
     }
 }

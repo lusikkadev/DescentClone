@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4833369673749170260}
   - component: {fileID: 2428791563369030847}
   - component: {fileID: 6881328523203929542}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PlayerCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,7 +66,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 0
+  m_Antialiasing: 2
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -566,8 +566,12 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 5814192345092058734, guid: a43678ea1e7566c448ff4308f3a86330, type: 3}
+  dodgeAction: {fileID: 3955374207106591122, guid: a43678ea1e7566c448ff4308f3a86330, type: 3}
   maxForwardSpeed: 30
   maxStrafeSpeed: 30
+  dodgeMultiplier: 2
+  dodgeCooldown: 1
+  canDodge: 1
   maxVerticalSpeed: 30
   acceleration: 100
   driftDecay: 40

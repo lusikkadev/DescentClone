@@ -12,6 +12,11 @@ public class StatManager : MonoBehaviour, IDamageable
     public int maxEnergy = 100;
     public int energy = 100;
 
+    // Cooldowns for energy and health regen TO BE IMPLEMENTED
+    public int minEnergy = 10;
+    public float energyRegenCooldown = 2f;
+    public float healthRegenCooldown = 5f;
+
     private void Awake()
     {
         if (uiManager == null)
