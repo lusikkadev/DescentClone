@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: d9632becf8dd42f459cd7fdd552a8d4d
+  - enabled: 1
     path: Assets/Scenes/Tatun Scene.unity
     guid: 7616ea5f00d2b464f96d49a01b445ca2
   m_configObjects:

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal.Internal;
 using static UnityEditor.PlayerSettings;
 
-public class BasicEnemy : MonoBehaviour
+public class BasicEnemy : MonoBehaviour, IDamageable
 {
     Transform Target;
     public float dampening;
@@ -29,62 +29,74 @@ public class BasicEnemy : MonoBehaviour
         Target = GameObject.FindAnyObjectByType<PlayerController>().transform;
         rb = GetComponent<Rigidbody>();
         PivotLeftRight = Random.Range(0, 1);
-        
+
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
 
 
         distanceToPlayer = Vector3.Distance(this.transform.position, Target.position);
         rotation = Quaternion.LookRotation(Target.position - transform.position);
         searchForPlayer();
 
-        if (detectPlayer) {
+        if (detectPlayer)
+        {
             //Wake up nearby AI
             var nearbyAI = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (var ai in nearbyAI) {
-                if(Vector3.Distance(this.transform.position, ai.transform.position) < alarmRange) {
+            foreach (var ai in nearbyAI)
+            {
+                if (Vector3.Distance(this.transform.position, ai.transform.position) < alarmRange)
+                {
                     ai.transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * dampening);
                 }
 
             }
-            if (distanceToPlayer > playerPivotRangeTarget) {
+            if (distanceToPlayer > playerPivotRangeTarget)
+            {
                 var forwardVector = rotation * Vector3.forward;
                 rb.AddForce(forwardVector * movementspeed, ForceMode.Impulse);
             }
-            if (distanceToPlayer < playerPivotRangeTarget) {
+            if (distanceToPlayer < playerPivotRangeTarget)
+            {
                 var backwardsVector = rotation * Vector3.back;
                 rb.AddForce(backwardsVector * movementspeed, ForceMode.Impulse);
             }
-                
-                transform.RotateAround(Target.position, Vector3.up, movementspeed * Time.deltaTime);
-                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * dampening);
-                timer += Time.deltaTime;
-                while (timer > firingInterval) {
-                    fireWeapon();
-                    timer -= firingInterval;
-                }
-            }
 
+            transform.RotateAround(Target.position, Vector3.up, movementspeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * dampening);
+            timer += Time.deltaTime;
+            while (timer > firingInterval)
+            {
+                fireWeapon();
+                timer -= firingInterval;
+            }
         }
-    private void fireWeapon() {
+
+    }
+    private void fireWeapon()
+    {
 
         GameObject projectileInstance = Instantiate(Projectile, firingPosition.position, transform.rotation);
         var irb = projectileInstance.GetComponent<Rigidbody>();
-        irb.AddForce(transform.forward*projectileSpeed);
+        irb.AddForce(transform.forward * projectileSpeed);
 
 
     }
-    private void searchForPlayer() {
+    private void searchForPlayer()
+    {
         var delta = Target.position - transform.position;
         float angle = Vector3.Angle(transform.forward, delta);
-        if (distanceToPlayer < detectionRange && angle < detectionAngle) {
+        if (distanceToPlayer < detectionRange && angle < detectionAngle)
+        {
             detectPlayer = true;
-        }else detectPlayer = false;
+        }
+        else detectPlayer = false;
     }
 
-    private void OnDrawGizmos() {
+    private void OnDrawGizmos()
+    {
         var clockwise = Quaternion.Euler(0, -detectionAngle, 0);
         var counterClockwise = Quaternion.Euler(0, detectionAngle, 0);
         var longForward = transform.forward * detectionRange;
@@ -94,4 +106,20 @@ public class BasicEnemy : MonoBehaviour
         Debug.DrawLine(p, p + left);
         Debug.DrawLine(p, p + right);
     }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        // kaikki anims ja efektit tänne
+        Destroy(gameObject);
+    }
+
 }

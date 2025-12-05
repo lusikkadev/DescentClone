@@ -11,7 +11,7 @@ public class HitScanWeapon : WeaponBase
     public float range = 200f;
 
     [Tooltip("Damage dealt per hit")]
-    public float damage = 10f;
+    public int damage = 10;
 
     [Tooltip("Visual effect spawned at hit point (optional)")]
     public GameObject impactPrefab;

@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 6209847387364684560}
   - component: {fileID: -9060181153116649550}
   - component: {fileID: 5468770143737165864}
+  - component: {fileID: 678780722837803937}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -309,7 +310,7 @@ MonoBehaviour:
   movementspeed: 0.05
   firingInterval: 2
   projectileSpeed: 500
-  health: 50
+  health: 20
   detectionRange: 30
   detectionAngle: 70
   alarmRange: 5
@@ -521,3 +522,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &678780722837803937
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8779730902617207634}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2, y: 1.2, z: 1.2}
+  m_Center: {x: 0, y: 0, z: 0}

@@ -5,10 +5,10 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float lifeTime = 10f;
-    public float damage = 20f;
+    public int damage = 20;
     Rigidbody rb;
     Rigidbody ownerRb;
-    LayerMask hitMask = ~0;
+    public LayerMask hitMask = ~0;
     [SerializeField] ParticleSystem explosionEffect;
     [SerializeField] ParticleSystem trailEffect;
 
