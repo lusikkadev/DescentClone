@@ -40,13 +40,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06437c1ff663d574d9447842ba0a72e4, type: 3}
   m_Name: ScreenSpaceLensFlare
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.ScreenSpaceLensFlare
-  active: 1
+  active: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.1
+    m_Value: 1
   tintColor:
     m_OverrideState: 1
-    m_Value: {r: 0, g: 0.112593174, b: 1, a: 1}
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
   bloomMip:
     m_OverrideState: 0
     m_Value: 1
@@ -79,13 +79,13 @@ MonoBehaviour:
     m_Value: 1.5
   streaksIntensity:
     m_OverrideState: 1
-    m_Value: 1.88
+    m_Value: 1
   streaksLength:
     m_OverrideState: 1
     m_Value: 0.5
   streaksOrientation:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   streaksThreshold:
     m_OverrideState: 1
     m_Value: 0.25
@@ -93,8 +93,8 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 4
   chromaticAbberationIntensity:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 0.5
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

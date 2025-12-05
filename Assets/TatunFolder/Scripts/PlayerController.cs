@@ -2,9 +2,14 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    StatManager statManager;
+
+
     [Header("Input (assign InputAction / PlayerInput -> Actions)")]
     [Tooltip("Left stick (Vector2): x = strafe (left/right), y = throttle (forward/back)")]
     public InputActionProperty translateAction;
@@ -57,6 +62,7 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        statManager = FindFirstObjectByType<StatManager>();
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
@@ -255,5 +261,4 @@ public class PlayerController : MonoBehaviour
         if (prop == null || prop.action == null) return 0f;
         try { return prop.action.ReadValue<float>(); } catch { return 0f; }
     }
-
 }

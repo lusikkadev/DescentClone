@@ -11,6 +11,7 @@ public class Projectile : MonoBehaviour
     public LayerMask hitMask = ~0;
     [SerializeField] ParticleSystem explosionEffect;
     [SerializeField] ParticleSystem trailEffect;
+    [SerializeField] GameObject shockWave;
 
     void Awake()
     {
@@ -40,6 +41,12 @@ public class Projectile : MonoBehaviour
     {
         if (((1 << collision.gameObject.layer) & hitMask) == 0) return;
         rb.linearVelocity = Vector3.zero;
+        // enable shockwave
+        if (shockWave != null)
+        {
+            shockWave.transform.parent = null;
+            shockWave.SetActive(true);
+        }
         MeshRenderer mr = GetComponentInChildren<MeshRenderer>();
         mr.enabled = false;
         // damage
