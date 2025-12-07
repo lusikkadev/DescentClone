@@ -5247,6 +5247,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1720437294}
     m_Modifications:
     - target: {fileID: 2627485670538044237, guid: ce61edd9cd212f74a90ea490a5f1e9ca, type: 3}
+      propertyPath: minEnergy
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2627485670538044237, guid: ce61edd9cd212f74a90ea490a5f1e9ca, type: 3}
       propertyPath: energyCooldown
       value: 0
       objectReference: {fileID: 0}
