@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     [Header("Translation")]
     public float maxForwardSpeed = 30f;
     public float maxStrafeSpeed = 30f;
-    public float maxVerticalSpeed = 15f;
+    public float maxVerticalSpeed = 30f;
     public float acceleration = 100f;
     public float driftDecay = 40f;
     public float inputDeadzone = 0.1f;
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
     float rollStabilizeSpeed = 1.5f;
 
     [Header("Dodge")]
-    public float dodgeSpeed = 45f;
+    public float dodgeSpeed = 80f;
     public float dodgeCooldown = 1f;
     public float dodgeEnergyCost = 10f;
     public bool canDodge = true;
