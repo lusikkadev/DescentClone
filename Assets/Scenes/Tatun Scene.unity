@@ -5074,7 +5074,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8956142672309285395, guid: 36ec82bc8802f3b45baa370ad8256d11, type: 3}
       propertyPath: m_Name
-      value: CockPit
+      value: UI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5189,14 +5189,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UICam
       objectReference: {fileID: 0}
-    - target: {fileID: 298661000428036488, guid: 96fbcf5db95e5e24fbdcab9d1bf05ac7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 388179748992274948, guid: 96fbcf5db95e5e24fbdcab9d1bf05ac7, type: 3}
-      propertyPath: m_RenderPostProcessing
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3956789569796102823, guid: 96fbcf5db95e5e24fbdcab9d1bf05ac7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 227.7074
@@ -5237,20 +5229,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8851630611775777559, guid: 96fbcf5db95e5e24fbdcab9d1bf05ac7, type: 3}
-      propertyPath: orthographic
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8851630611775777559, guid: 96fbcf5db95e5e24fbdcab9d1bf05ac7, type: 3}
-      propertyPath: m_FOVAxisMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8851630611775777559, guid: 96fbcf5db95e5e24fbdcab9d1bf05ac7, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 32
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5004145068644097670, guid: 96fbcf5db95e5e24fbdcab9d1bf05ac7, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -5263,6 +5242,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1720437294}
     m_Modifications:
+    - target: {fileID: 2627485670538044237, guid: ce61edd9cd212f74a90ea490a5f1e9ca, type: 3}
+      propertyPath: energyCooldown
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2627485670538044237, guid: ce61edd9cd212f74a90ea490a5f1e9ca, type: 3}
+      propertyPath: energyRegenRateFast
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2627485670538044237, guid: ce61edd9cd212f74a90ea490a5f1e9ca, type: 3}
+      propertyPath: energyRegenRateNormal
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 3063662130382766563, guid: ce61edd9cd212f74a90ea490a5f1e9ca, type: 3}
       propertyPath: m_Name
       value: StatManager

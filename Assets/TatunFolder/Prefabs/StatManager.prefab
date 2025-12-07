@@ -48,3 +48,10 @@ MonoBehaviour:
   health: 100
   maxEnergy: 100
   energy: 100
+  minEnergy: 10
+  healthRegenCooldown: 3
+  energyRegenRateNormal: 20
+  energyRegenRateFast: 10
+  energyCooldown: 0
+  healthCooldown: 0
+  IsUsingEnergy: 0

@@ -51,6 +51,7 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 55
+  energyPerShot: 20
   projectilePrefab: {fileID: 5622990059433253847, guid: dbd816b929134c64a9329ec1120806fd, type: 3}
   projectileSpeed: 80
   spawnOffset: 0.5

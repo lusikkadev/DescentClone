@@ -10010,6 +10010,7 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 55
+  energyPerShot: 2
   range: 200
   damage: 5
   impactPrefab: {fileID: 1337198075554910, guid: c9daee2145fff4047a3df7e642407c3d, type: 3}

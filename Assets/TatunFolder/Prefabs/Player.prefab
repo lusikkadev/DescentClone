@@ -569,9 +569,6 @@ MonoBehaviour:
   dodgeAction: {fileID: 3955374207106591122, guid: a43678ea1e7566c448ff4308f3a86330, type: 3}
   maxForwardSpeed: 30
   maxStrafeSpeed: 30
-  dodgeMultiplier: 2
-  dodgeCooldown: 1
-  canDodge: 1
   maxVerticalSpeed: 30
   acceleration: 100
   driftDecay: 40
@@ -582,9 +579,17 @@ MonoBehaviour:
   angularAcceleration: 400
   rotationSmooth: 12
   invertPitch: 0
+  dodgeMultiplier: 3.5
+  dodgeCooldown: 1
+  dodgeEnergyCost: 10
+  canDodge: 1
   collisionTangentialRetention: 0
   collisionAngularRetention: 0
   collisionNormalIgnoreThreshold: 0.5
+  dodgeVfx: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+  playerCamera: {fileID: 3286377408955417559}
+  dodgeFovBoost: 12
+  dodgeFovTime: 0.18
   wasTransInput: 0
 --- !u!82 &6630065844468381013
 AudioSource:

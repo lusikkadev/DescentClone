@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public abstract class WeaponBase : MonoBehaviour
 {
+
     [Header("Common")]
     [Tooltip("Where projectiles / tracers spawn (can be camera or ship)")]
     public List<Transform> muzzles = new List<Transform>();
@@ -17,6 +18,9 @@ public abstract class WeaponBase : MonoBehaviour
     
     [Tooltip("Layer mask for what this weapon can hit")]
     public LayerMask hitMask = ~0; // default all
+
+    [Tooltip("Energy usage per shot")]
+    public float energyPerShot = 1f;
 
     protected Camera aimCamera;
     protected Rigidbody ownerRb;

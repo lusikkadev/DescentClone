@@ -28,9 +28,6 @@ public class PlayerController : MonoBehaviour
     [Header("Translation")]
     public float maxForwardSpeed = 30f;
     public float maxStrafeSpeed = 30f;
-    public float dodgeMultiplier = 3f;
-    public float dodgeCooldown = 1f;
-    public bool canDodge = true;
     public float maxVerticalSpeed = 15f;
     public float acceleration = 100f;
     public float driftDecay = 40f;
@@ -49,6 +46,12 @@ public class PlayerController : MonoBehaviour
     float rollStabilizeDelay = 0.2f;
     float rollStabilizeSpeed = 1.5f;
 
+    [Header("Dodge")]
+    public float dodgeSpeed = 45f;
+    public float dodgeCooldown = 1f;
+    public float dodgeEnergyCost = 10f;
+    public bool canDodge = true;
+
     [Header("Collision tuning")]
     [Range(0f, 1f)]
     [Tooltip("Fraction of tangential velocity to keep after a collision. 0 = complete stop along surface, 1 = keep full tangent speed.")]
@@ -59,8 +62,12 @@ public class PlayerController : MonoBehaviour
     [Tooltip("If the normal (into-surface) component of velocity is small than this threshold, it's ignored.")]
     public float collisionNormalIgnoreThreshold = 0.05f;
 
-    // Complete stop / no retention seems to be better for Descent style imo
-
+    // Dodge visuals
+    [Header("Dodge VFX")]
+    public ParticleSystem dodgeVfx;
+    public Camera playerCamera;
+    public float dodgeFovBoost = 12f;
+    public float dodgeFovTime = 0.18f;
 
     Rigidbody rb;
     Vector3 localVelocity;
@@ -73,6 +80,14 @@ public class PlayerController : MonoBehaviour
         rb.useGravity = false;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.maxAngularVelocity = 50f;
+
+        if (playerCamera == null)
+        {
+            // fallback to main camera or WeaponManager's camera
+            playerCamera = Camera.main;
+            var wm = FindFirstObjectByType<WeaponManager>();
+            if (playerCamera == null && wm != null) playerCamera = wm.aimCamera;
+        }
     }
 
     void OnEnable()
@@ -82,12 +97,8 @@ public class PlayerController : MonoBehaviour
         rollAction.action?.Enable();
         upAction.action?.Enable();
         downAction.action?.Enable();
-        
+
         dodgeAction?.action?.Enable();
-        if (dodgeAction?.action !=null)
-        {
-            dodgeAction.action.performed += OnDodge;
-        }
     }
 
     void OnDisable()
@@ -97,13 +108,7 @@ public class PlayerController : MonoBehaviour
         rollAction.action?.Disable();
         upAction.action?.Disable();
         downAction.action?.Disable();
-        
-
-        if (dodgeAction?.action != null)
-        {
-            dodgeAction.action.performed -= OnDodge;
-            dodgeAction?.action?.Disable();
-        }
+        dodgeAction?.action?.Disable();
     }
 
     void FixedUpdate()
@@ -282,31 +287,88 @@ public class PlayerController : MonoBehaviour
     }
 
     // Dodge / Boost action towards move direction using dodgeMultiplier for speed
-    public void OnDodge(InputAction.CallbackContext context)
-    {
-        if (context.performed && canDodge)
-        {
-            canDodge = false;
-            StartCoroutine(DodgeCooldown());
-            Vector2 leftStick = ReadVector2(translateAction);
-            float strafe = leftStick.x;
-            float throttle = leftStick.y;
-            Vector3 dodgeDirection = new Vector3(strafe, 0f, throttle).normalized;
-            //if (dodgeDirection.sqrMagnitude < 1e-4f)
-            //{
-            //    // No input, dodge back
 
-            //    dodgeDirection = Vector3.back;
-            //}
-            Vector3 dodgeVelocity = dodgeDirection * maxStrafeSpeed * dodgeMultiplier;
-            localVelocity = dodgeVelocity;
-            rb.linearVelocity = transform.TransformDirection(localVelocity);
+    public void OnDodge()
+    {
+        PerformDodge();
+    }
+
+    void PerformDodge()
+    {
+        // respect global energy lock
+        if (StatManager.Instance != null && StatManager.Instance.energyCooldown) return;
+
+        if (!canDodge || rb == null || statManager == null) return;
+
+        // read current inputs (including vertical) and require a deliberate direction to dodge
+        Vector2 leftStick = ReadVector2(translateAction);
+        float triggerUp = ReadFloat(upAction);
+        float triggerDown = ReadFloat(downAction);
+        float strafe = leftStick.x;
+        float throttle = leftStick.y;
+        float vertical = triggerUp - triggerDown;
+
+        Vector3 inputLocal = new Vector3(strafe, vertical, throttle);
+
+        // require explicit input direction — abort if no direction is provided
+        if (inputLocal.sqrMagnitude <= 1e-4f) return;
+
+        // consume energy
+        statManager.UseEnergy(dodgeEnergyCost);
+
+        // mark using-energy to pause regen
+        statManager.IsUsingEnergy = true;
+
+        // visuals
+        dodgeVfx?.Play();
+        if (playerCamera != null)
+            StartCoroutine(DoDodgeFov(playerCamera, dodgeFovBoost, dodgeFovTime));
+
+        canDodge = false;
+        StartCoroutine(DodgeCooldown());
+
+        // compute dodge direction in world space using player orientation
+        Vector3 dodgeDirLocal = inputLocal.normalized;
+        Vector3 dodgeWorldDir = transform.TransformDirection(dodgeDirLocal).normalized;
+
+        // apply fixed dodge speed
+        Vector3 dodgeWorldVel = dodgeWorldDir * dodgeSpeed;
+
+        rb.linearVelocity = dodgeWorldVel;
+        localVelocity = transform.InverseTransformDirection(dodgeWorldVel);
+    }
+
+    IEnumerator DoDodgeFov(Camera cam, float boost, float duration)
+    {
+        if (cam == null) yield break;
+        float startFov = cam.fieldOfView;
+        float target = startFov + boost;
+        float t = 0f;
+        while (t < duration)
+        {
+            cam.fieldOfView = Mathf.Lerp(startFov, target, t / duration);
+            t += Time.deltaTime;
+            yield return null;
         }
+        cam.fieldOfView = target;
+        // return to normal quickly
+        t = 0f;
+        float retTime = duration * 0.6f;
+        while (t < retTime)
+        {
+            cam.fieldOfView = Mathf.Lerp(target, startFov, t / retTime);
+            t += Time.deltaTime;
+            yield return null;
+        }
+        cam.fieldOfView = startFov;
     }
 
     IEnumerator DodgeCooldown()
     {
         yield return new WaitForSeconds(dodgeCooldown);
         canDodge = true;
+
+        // end using-energy state after dodge cooldown
+        if (statManager != null) statManager.IsUsingEnergy = false;
     }
 }

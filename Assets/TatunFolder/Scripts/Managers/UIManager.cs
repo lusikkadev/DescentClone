@@ -10,6 +10,9 @@ public class UIManager : MonoBehaviour
 
     StatManager statManager;
 
+    Image energyFillImage;
+    Coroutine energyFlashCoroutine;
+
     private void Awake()
     {
         if (statManager == null)
@@ -24,6 +27,13 @@ public class UIManager : MonoBehaviour
         {
             energyBar = GameObject.Find("EnergyBar").GetComponent<Slider>();
         }
+
+        if (energyBar != null && energyBar.fillRect != null)
+        {
+            energyFillImage = energyBar.fillRect.GetComponent<Image>();
+        }
+
+        energyFillImage.color = Color.lightBlue;
     }
 
     void Start()
@@ -72,5 +82,43 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
         energyBar.value = to;
+    }
+
+    // Flashing helpers for energy cooldown state
+    public void StartEnergyCooldownFlash()
+    {
+        if (energyFillImage == null) return;
+        if (energyFlashCoroutine != null) StopCoroutine(energyFlashCoroutine);
+        energyFlashCoroutine = StartCoroutine(EnergyFlashRoutine());
+    }
+
+    public void StopEnergyCooldownFlash()
+    {
+        if (energyFlashCoroutine != null)
+        {
+            StopCoroutine(energyFlashCoroutine);
+            energyFlashCoroutine = null;
+        }
+        // restore fill alpha/color
+        if (energyFillImage != null)
+        {
+            energyFillImage.color = Color.lightBlue;
+        }
+    }
+
+    IEnumerator EnergyFlashRoutine()
+    {
+        if (energyFillImage == null) yield break;
+        Color baseColor = Color.lightBlue;
+        Color flashColor = Color.white;
+        float interval = 0.35f;
+
+        while (true)
+        {
+            energyFillImage.color = flashColor;
+            yield return new WaitForSeconds(interval);
+            energyFillImage.color = baseColor;
+            yield return new WaitForSeconds(interval);
+        }
     }
 }

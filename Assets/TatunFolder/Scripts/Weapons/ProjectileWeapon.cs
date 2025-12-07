@@ -1,8 +1,6 @@
-using UnityEngine;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Collections;
-
+using System.Collections.Generic;
+using UnityEngine;
 
 public class ProjectileWeapon : WeaponBase
 {
@@ -31,7 +29,6 @@ public class ProjectileWeapon : WeaponBase
         if (!CanFire() || projectilePrefab == null || muzzles == null || muzzles.Count == 0) return;
         NoteFire();
 
-
         if (sequentialFiring)
         {
             StartCoroutine(FireSequentially(aimRay));
@@ -59,6 +56,12 @@ public class ProjectileWeapon : WeaponBase
 
     private void FireAllMuzzles(int i, Ray aimRay)
     {
+        // Respect energy lock and availability (match HitScan behavior)
+        if (StatManager.Instance == null || StatManager.Instance.energy <= 0f || StatManager.Instance.energyCooldown)
+        {
+            return;
+        }
+
         var muzzle = muzzles[i];
         Vector2 offset = (i < aimOffsets.Count) ? aimOffsets[i] : Vector2.zero;
         Ray ray = GetOffsetRay(aimRay, offset);
@@ -74,6 +77,8 @@ public class ProjectileWeapon : WeaponBase
             proj.Initialize(ray.direction.normalized * projectileSpeed, inherit, ownerRb, hitMask);
         }
 
+        // deduct energy per shot
+        StatManager.Instance.UseEnergy(energyPerShot);
     }
 
     // Helper: Offset the aim ray in screen space

@@ -63,6 +63,11 @@ public class HitScanWeapon : WeaponBase
 
     private void FireAllMuzzles(int i, Ray aimRay)
     {
+        if (StatManager.Instance.energy <= 0f || StatManager.Instance.energyCooldown)
+        {
+            // Not enough energy to fire
+            return;
+        }
 
         // FX
         muzzleFlashes[i].Play();
@@ -115,5 +120,6 @@ public class HitScanWeapon : WeaponBase
             Vector2 screenPos = screenCenter + new Vector2(screenOffset.x * Screen.width, screenOffset.y * Screen.height);
             return aimCamera.ScreenPointToRay(screenPos);
         }
+        StatManager.Instance.UseEnergy(energyPerShot);
     }
 }

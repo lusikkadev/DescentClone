@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3956789569796102823}
   - component: {fileID: 8851630611775777559}
-  - component: {fileID: 5004145068644097670}
   - component: {fileID: 388179748992274948}
   m_Layer: 5
   m_Name: UICam
@@ -27,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 298661000428036488}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.018421464, y: -0.9751622, z: 0.08888218, w: 0.20203817}
+  m_LocalRotation: {x: 0.018423686, y: -0.9751625, z: 0.08888229, w: 0.20203608}
   m_LocalPosition: {x: 227.7074, y: 207.5079, z: 621.5235}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 10.416, y: -156.59, z: -0.001}
 --- !u!20 &8851630611775777559
 Camera:
   m_ObjectHideFlags: 0
@@ -47,7 +46,7 @@ Camera:
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
-  m_FOVAxisMode: 0
+  m_FOVAxisMode: 1
   m_Iso: 200
   m_ShutterSpeed: 0.005
   m_Aperture: 16
@@ -85,14 +84,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &5004145068644097670
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 298661000428036488}
-  m_Enabled: 1
 --- !u!114 &388179748992274948
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
 
 // Manages all weapons and inputs for a player character.
 
@@ -31,6 +32,10 @@ public class WeaponManager : MonoBehaviour
     // internal smoothing state because of the camera sway
     Vector3 smoothedAimDir = Vector3.forward;
     Ray lastSmoothedAimRay = new Ray(Vector3.zero, Vector3.forward);
+
+    // Public firing flag so other systems (StatManager) can know when player is actively firing
+    public bool IsFiring { get; private set; } = false;
+    Coroutine _clearFireCoroutine;
 
     void Start()
     {
@@ -115,6 +120,11 @@ public class WeaponManager : MonoBehaviour
             previousWeapon.action.performed -= OnPreviousWeaponPerformed;
             previousWeapon.action.Disable();
         }
+
+        // ensure firing flag cleared and notify StatManager
+        IsFiring = false;
+        if (StatManager.Instance != null) StatManager.Instance.IsUsingEnergy = false;
+        if (_clearFireCoroutine != null) { StopCoroutine(_clearFireCoroutine); _clearFireCoroutine = null; }
     }
 
     void Update()
@@ -144,12 +154,22 @@ public class WeaponManager : MonoBehaviour
         // input handling (poll when holding)
         if (handleInput && fireHoldToAuto && fireAction?.action != null)
         {
-
             float v = ReadFloat(fireAction);
-            if (v >= fireHoldThreshold)
+            bool firingNow = v >= fireHoldThreshold;
+            if (firingNow)
             {
-                Debug.Log("player fired the gun");
+                // mark firing and fire
+                IsFiring = true;
+                StatManager.Instance?.GetType();
+                StatManager.Instance?.GetType();
+                StatManager.Instance.IsUsingEnergy = true;
                 FireCurrent(lastSmoothedAimRay);
+            }
+            else
+            {
+                // not holding fire
+                IsFiring = false;
+                if (StatManager.Instance != null) StatManager.Instance.IsUsingEnergy = false;
             }
         }
     }
@@ -157,8 +177,21 @@ public class WeaponManager : MonoBehaviour
     // Single press actions
     void OnFirePerformed(InputAction.CallbackContext ctx)
     {
-        Debug.Log("player fired the weapon");
+        if (StatManager.Instance.energy <= 0f || StatManager.Instance.energyCooldown) return;
+        IsFiring = true;
+        if (_clearFireCoroutine != null) { StopCoroutine(_clearFireCoroutine); _clearFireCoroutine = null; }
+        _clearFireCoroutine = StartCoroutine(ClearFiringAfter(0.15f));
+
+        if (StatManager.Instance != null) StatManager.Instance.IsUsingEnergy = true;
         FireCurrent(lastSmoothedAimRay);
+    }
+
+    IEnumerator ClearFiringAfter(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        IsFiring = false;
+        if (StatManager.Instance != null) StatManager.Instance.IsUsingEnergy = false;
+        _clearFireCoroutine = null;
     }
 
     void OnNextWeaponPerformed(InputAction.CallbackContext ctx)
@@ -319,6 +352,13 @@ public class WeaponManager : MonoBehaviour
     public void FireCurrent(Ray aimRay)
     {
         if (weapons.Count == 0) return;
+
+        // mark brief firing state so StatManager sees it (covers programmatic FireCurrent calls)
+        IsFiring = true;
+        if (_clearFireCoroutine != null) { StopCoroutine(_clearFireCoroutine); _clearFireCoroutine = null; }
+        _clearFireCoroutine = StartCoroutine(ClearFiringAfter(0.15f));
+        if (StatManager.Instance != null) StatManager.Instance.IsUsingEnergy = true;
+
         weapons[currentIndex]?.Fire(aimRay);
     }
 
