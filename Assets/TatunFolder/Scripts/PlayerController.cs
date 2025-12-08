@@ -67,14 +67,30 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem dodgeVfx;
     public Camera playerCamera;
     public float dodgeFovBoost = 12f;
-    public float dodgeFovTime = 0.18f;
+    public float dodgeFovTime = 0.5f;
+
+    // AUDIO for engine sound pitch
+    AudioSource engineSound;
+    [Header("Engine sound (pitch by speed)")]
+    [Tooltip("Minimum pitch when nearly stationary")]
+    public float enginePitchMin = 0.3f;
+    [Tooltip("Maximum pitch at or above reference speed")]
+    public float enginePitchMax = 1.0f;
+    [Tooltip("Pitch to set when dodging (overrides speed-based pitch)")]
+    public float dodgePitch = 1.15f;
+    [Tooltip("Smoothing speed for pitch changes")]
+    public float enginePitchLerpSpeed = 6f;
+    [Tooltip("Reference speed used to map velocity -> pitch (meters/sec). If 0 will auto-calc from movement speeds)")]
+    public float enginePitchReferenceSpeed = 0f;
 
     Rigidbody rb;
     Vector3 localVelocity;
     public bool wasTransInput = false;
+    
 
     void Awake()
     {
+        engineSound = GetComponent<AudioSource>();
         statManager = FindFirstObjectByType<StatManager>();
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
@@ -87,6 +103,21 @@ public class PlayerController : MonoBehaviour
             playerCamera = Camera.main;
             var wm = FindFirstObjectByType<WeaponManager>();
             if (playerCamera == null && wm != null) playerCamera = wm.aimCamera;
+        }
+
+        if (engineSound != null)
+        {
+            engineSound.loop = true;
+            if (!engineSound.isPlaying) engineSound.Play();
+
+            engineSound.pitch = enginePitchMin;
+        }
+
+        if (enginePitchReferenceSpeed <= 0f)
+        {
+            enginePitchReferenceSpeed = Mathf.Max(maxForwardSpeed, maxStrafeSpeed, maxVerticalSpeed);
+
+            if (enginePitchReferenceSpeed <= 0f) enginePitchReferenceSpeed = 1f;
         }
     }
 
@@ -109,6 +140,32 @@ public class PlayerController : MonoBehaviour
         upAction.action?.Disable();
         downAction.action?.Disable();
         dodgeAction?.action?.Disable();
+    }
+
+    private void Update()
+    {
+        UpdateEnginePitch();
+    }
+
+    void UpdateEnginePitch()
+    {
+        if (engineSound == null || rb == null) return;
+
+        if (!canDodge)
+        {
+            engineSound.pitch = dodgePitch;
+        }
+
+        float speed = rb.linearVelocity.magnitude;
+
+        // normalized bsaed on reference speed. Can change in inspector.
+        float t = Mathf.Clamp01(speed / enginePitchReferenceSpeed);
+
+        // map to pitch range
+        float targetPitch = Mathf.Lerp(enginePitchMin, enginePitchMax, t);
+
+        // smooth
+        engineSound.pitch = Mathf.Lerp(engineSound.pitch, targetPitch, Time.deltaTime * enginePitchLerpSpeed);
     }
 
     void FixedUpdate()
@@ -156,7 +213,6 @@ public class PlayerController : MonoBehaviour
             localVelocity = Vector3.MoveTowards(localVelocity, targetLocalVelocity, acceleration * dt);
 
             rb.linearVelocity = transform.TransformDirection(localVelocity);
-            //AudioFW.Play(id: "EngineSound");
         }
         else
         {
@@ -300,6 +356,8 @@ public class PlayerController : MonoBehaviour
         if (StatManager.Instance != null && StatManager.Instance.energyCooldown) return;
 
         if (!canDodge || rb == null || statManager == null) return;
+
+        
 
         // read current inputs (including vertical) and require a deliberate direction to dodge
         Vector2 leftStick = ReadVector2(translateAction);

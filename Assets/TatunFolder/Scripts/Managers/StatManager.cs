@@ -1,6 +1,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class StatManager : MonoBehaviour, IDamageable
 {
@@ -57,6 +58,7 @@ public class StatManager : MonoBehaviour, IDamageable
             weaponManager = FindFirstObjectByType<WeaponManager>();
         }
     }
+
 
     public void TakeDamage(int damage)
     {
@@ -137,6 +139,7 @@ public class StatManager : MonoBehaviour, IDamageable
     IEnumerator EnergyCooldownRecovery()
     {
         energyCooldown = true;
+        AudioFW.PlayLoop(id: "EnergyAlarm");
         uiManager?.StartEnergyCooldownFlash();
 
         // Regenerate 
@@ -151,6 +154,7 @@ public class StatManager : MonoBehaviour, IDamageable
 
         // Clear cooldown
         energyCooldown = false;
+        AudioFW.StopLoop(id: "EnergyAlarm");
         uiManager?.StopEnergyCooldownFlash();
 
         energyCooldownCoroutine = null;

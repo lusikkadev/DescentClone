@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public Slider healthBar;
-    public Slider energyBar;
+    [SerializeField] Slider healthBar;
+    [SerializeField] Slider energyBar;
+
+    [SerializeField] Image hudImage;
+    Color hudColor;
 
     StatManager statManager;
 
@@ -40,6 +43,8 @@ public class UIManager : MonoBehaviour
     {
         UpdateHealthBar();
         UpdateEnergyBar();
+
+        hudColor = hudImage.color;
     }
 
     public void UpdateHealthBar()
@@ -88,6 +93,7 @@ public class UIManager : MonoBehaviour
     public void StartEnergyCooldownFlash()
     {
         if (energyFillImage == null) return;
+        if (hudImage == null) return;
         if (energyFlashCoroutine != null) StopCoroutine(energyFlashCoroutine);
         energyFlashCoroutine = StartCoroutine(EnergyFlashRoutine());
     }
@@ -104,20 +110,28 @@ public class UIManager : MonoBehaviour
         {
             energyFillImage.color = Color.lightBlue;
         }
+        if (hudImage != null)
+        {
+            hudImage.color = hudColor;
+        }
     }
 
     IEnumerator EnergyFlashRoutine()
     {
         if (energyFillImage == null) yield break;
+        if (hudImage == null) yield break;
         Color baseColor = Color.lightBlue;
         Color flashColor = Color.white;
+        Color hudFlashColor = Color.grey;
         float interval = 0.35f;
 
         while (true)
         {
             energyFillImage.color = flashColor;
+            hudImage.color = hudFlashColor;
             yield return new WaitForSeconds(interval);
             energyFillImage.color = baseColor;
+            hudImage.color = hudColor;
             yield return new WaitForSeconds(interval);
         }
     }

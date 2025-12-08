@@ -197,6 +197,7 @@ Transform:
   m_Children:
   - {fileID: 8952808367840640961}
   - {fileID: 4833369673749170260}
+  - {fileID: 7950792411312398891}
   m_Father: {fileID: 1652303646012293200}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &3286377408955417559
@@ -414,6 +415,7 @@ GameObject:
   - component: {fileID: 2257738071151159198}
   - component: {fileID: 2346970768239039846}
   - component: {fileID: 6630065844468381013}
+  - component: {fileID: 648379278333537270}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -579,17 +581,22 @@ MonoBehaviour:
   angularAcceleration: 400
   rotationSmooth: 12
   invertPitch: 0
-  dodgeMultiplier: 3.5
+  dodgeSpeed: 80
   dodgeCooldown: 1
   dodgeEnergyCost: 10
   canDodge: 1
   collisionTangentialRetention: 0
   collisionAngularRetention: 0
   collisionNormalIgnoreThreshold: 0.5
-  dodgeVfx: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+  dodgeVfx: {fileID: 9080232361773265199}
   playerCamera: {fileID: 3286377408955417559}
   dodgeFovBoost: 12
-  dodgeFovTime: 0.18
+  dodgeFovTime: 0.5
+  enginePitchMin: 0.3
+  enginePitchMax: 1
+  dodgePitch: 1.15
+  enginePitchLerpSpeed: 6
+  enginePitchReferenceSpeed: 0
   wasTransInput: 0
 --- !u!82 &6630065844468381013
 AudioSource:
@@ -602,11 +609,11 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: b40fb7294c530a740b9019e89cfa09b9, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -648,7 +655,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -688,3 +695,213 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &648379278333537270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6743609936654256215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c3684b22f00604a97bb68037fcf4cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: SteamAudioUnity::SteamAudio.SteamAudioSource
+  directBinaural: 1
+  interpolation: 0
+  perspectiveCorrection: 0
+  distanceAttenuation: 0
+  distanceAttenuationInput: 0
+  distanceAttenuationValue: 1
+  airAbsorption: 0
+  airAbsorptionInput: 0
+  airAbsorptionLow: 1
+  airAbsorptionMid: 1
+  airAbsorptionHigh: 1
+  directivity: 0
+  directivityInput: 0
+  dipoleWeight: 0
+  dipolePower: 0
+  directivityValue: 1
+  occlusion: 1
+  occlusionInput: 0
+  occlusionType: 0
+  occlusionRadius: 1
+  occlusionSamples: 16
+  occlusionValue: 1
+  transmission: 0
+  transmissionType: 0
+  transmissionInput: 0
+  transmissionLow: 1
+  transmissionMid: 1
+  transmissionHigh: 1
+  maxTransmissionSurfaces: 1
+  directMixLevel: 1
+  reflections: 1
+  reflectionsType: 0
+  useDistanceCurveForReflections: 0
+  currentBakedSource: {fileID: 0}
+  reverbTimeLow: 0
+  reverbTimeMid: 0
+  reverbTimeHigh: 0
+  hybridReverbEQLow: 1
+  hybridReverbEQMid: 1
+  hybridReverbEQHigh: 1
+  hybridReverbDelay: 0
+  applyHRTFToReflections: 0
+  reflectionsMixLevel: 1
+  pathing: 0
+  pathingProbeBatch: {fileID: 0}
+  pathValidation: 1
+  findAlternatePaths: 1
+  pathingEQ:
+  - 1
+  - 1
+  - 1
+  pathingSH:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  applyHRTFToPathing: 0
+  pathingMixLevel: 1
+  normalizePathingEQ: 0
+--- !u!1001 &7694930260477057767
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4344926718688799520}
+    m_Modifications:
+    - target: {fileID: 332986958026782924, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 332986958026782924, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 332986958026782924, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 332986958026782924, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 332986958026782924, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 332986958026782924, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 332986958026782924, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 332986958026782924, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 332986958026782924, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 332986958026782924, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: lengthInSec
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: ShapeModule.type
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: InitialModule.gravitySource
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: InitialModule.startSizeY.scalar
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: InitialModule.startSizeZ.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: EmissionModule.rateOverDistance.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5841205626845252382, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: m_Name
+      value: DodgeFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 5841205626845252382, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+--- !u!4 &7950792411312398891 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 332986958026782924, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+  m_PrefabInstance: {fileID: 7694930260477057767}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &9080232361773265199 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1498174152486677448, guid: bb6517d947aad924098ccd7ad068c266, type: 3}
+  m_PrefabInstance: {fileID: 7694930260477057767}
+  m_PrefabAsset: {fileID: 0}
