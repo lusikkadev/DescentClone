@@ -9,23 +9,26 @@ public class StatManager : MonoBehaviour, IDamageable
     UIManager uiManager;
     WeaponManager weaponManager;
 
-    // Player Stats
+    [Header("Stats")]
     public int maxHealth = 100;
     public int health = 100;
     public int maxEnergy = 100;
     public float energy = 100;
 
-    // Cooldowns / rates
+    [Header("Key Items")]
+    public bool hasRedKey = false;
+    public bool hasBlueKey = false;
+    public bool hasGreenKey = false;
+
+    [Header("Regen Settings")]
     public int minEnergy = 0;
     //[SerializeField] float energyRegenCooldown = 5f; 
     [SerializeField] float healthRegenCooldown = 3f;
     [SerializeField] float healthRegenAccumulator = 0f;
     [SerializeField] float healthRegenRate = 2f;
-
     [SerializeField] float energyRegenDelay = 0.5f;
     [SerializeField] float energyRegenRateNormal = 20f;
     [SerializeField] float energyRegenRateCooldown = 10f;
-
     public bool energyCooldown = false;
     public bool healthCooldown = false;
     public bool energyDelay = false;

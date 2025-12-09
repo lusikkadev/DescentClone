@@ -2033,10 +2033,6 @@ PrefabInstance:
       propertyPath: m_BounceIntensity
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1848722257253802759, guid: 07681900066d0cf438fecb3de65dc9e1, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ef4acf9f9343da5478805233b69b7ce1, type: 2}
     - target: {fileID: 1876162196353629061, guid: 07681900066d0cf438fecb3de65dc9e1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0524
@@ -2054,29 +2050,9 @@ PrefabInstance:
       value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 3084744264496282418, guid: 07681900066d0cf438fecb3de65dc9e1, type: 3}
-      propertyPath: movementspeed
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3084744264496282418, guid: 07681900066d0cf438fecb3de65dc9e1, type: 3}
       propertyPath: detectionRange
       value: 200
       objectReference: {fileID: 0}
-    - target: {fileID: 3084744264496282418, guid: 07681900066d0cf438fecb3de65dc9e1, type: 3}
-      propertyPath: firingInterval
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3084744264496282418, guid: 07681900066d0cf438fecb3de65dc9e1, type: 3}
-      propertyPath: projectileSpeed
-      value: 2000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4089966393363956120, guid: 07681900066d0cf438fecb3de65dc9e1, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 8a1069efa77deea499ad0a082215845d, type: 2}
-    - target: {fileID: 4833611297410949783, guid: 07681900066d0cf438fecb3de65dc9e1, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ef4acf9f9343da5478805233b69b7ce1, type: 2}
     - target: {fileID: 5128899091237765043, guid: 07681900066d0cf438fecb3de65dc9e1, type: 3}
       propertyPath: m_LocalScale.x
       value: 100
@@ -2091,15 +2067,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5128899091237765043, guid: 07681900066d0cf438fecb3de65dc9e1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 264.9
+      value: 202.28442
       objectReference: {fileID: 0}
     - target: {fileID: 5128899091237765043, guid: 07681900066d0cf438fecb3de65dc9e1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 256.7
+      value: 166.52548
       objectReference: {fileID: 0}
     - target: {fileID: 5128899091237765043, guid: 07681900066d0cf438fecb3de65dc9e1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -158.7
+      value: -84.262695
       objectReference: {fileID: 0}
     - target: {fileID: 5128899091237765043, guid: 07681900066d0cf438fecb3de65dc9e1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2137,10 +2113,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyCopy (7)
       objectReference: {fileID: 0}
-    - target: {fileID: 7301607252855065540, guid: 07681900066d0cf438fecb3de65dc9e1, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ef4acf9f9343da5478805233b69b7ce1, type: 2}
     - target: {fileID: 7935595163362967265, guid: 07681900066d0cf438fecb3de65dc9e1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0528
