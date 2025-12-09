@@ -1,7 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering.Universal.Internal;
-using static UnityEditor.PlayerSettings;
-
 public class BasicEnemy : MonoBehaviour, IDamageable
 {
     Transform Target;
@@ -21,25 +18,26 @@ public class BasicEnemy : MonoBehaviour, IDamageable
     float distanceToPlayer;
     float timer;
 
-    float PivotLeftRight;
 
-    bool detectPlayer = false;
+    public EnemyAlarm alarmScript;
+    public bool detectPlayer = false;
     void Start()
     {
         Target = GameObject.FindAnyObjectByType<PlayerController>().transform;
         rb = GetComponent<Rigidbody>();
-        PivotLeftRight = Random.Range(0, 1);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
         distanceToPlayer = Vector3.Distance(this.transform.position, Target.position);
         rotation = Quaternion.LookRotation(Target.position - transform.position);
         searchForPlayer();
+
+        if (alarmScript.alarmed) {
+            detectPlayer = true;
+        }
 
         if (detectPlayer)
         {
@@ -49,7 +47,7 @@ public class BasicEnemy : MonoBehaviour, IDamageable
             {
                 if (Vector3.Distance(this.transform.position, ai.transform.position) < alarmRange)
                 {
-                    ai.transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * dampening);
+                    ai.GetComponent<EnemyAlarm>().alarmed = true;
                 }
 
             }
@@ -64,8 +62,7 @@ public class BasicEnemy : MonoBehaviour, IDamageable
                 rb.AddForce(backwardsVector * movementspeed, ForceMode.Impulse);
             }
 
-            transform.RotateAround(Target.position, Vector3.up, movementspeed * Time.deltaTime);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * dampening);
+            this.transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * dampening);
             timer += Time.deltaTime;
             while (timer > firingInterval)
             {
@@ -91,8 +88,10 @@ public class BasicEnemy : MonoBehaviour, IDamageable
         if (distanceToPlayer < detectionRange && angle < detectionAngle)
         {
             detectPlayer = true;
+            alarmScript.alarmed = true;
         }
         else detectPlayer = false;
+        alarmScript.alarmed = false;
     }
 
     private void OnDrawGizmos()
