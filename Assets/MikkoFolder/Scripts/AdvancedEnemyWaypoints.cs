@@ -1,9 +1,10 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 
 public class AdvancedEnemyWaypoints : MonoBehaviour
 {
-    public Transform Player;
+    Transform Player;
 
     public float followSpeed = 300;
     public float turnSpeed = 5;
@@ -13,6 +14,7 @@ public class AdvancedEnemyWaypoints : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Player = GameObject.FindAnyObjectByType<PlayerController>().transform;
         waypointL.transform.position = transform.position + new Vector3(0, 0, -waypointDistance);
         waypointR.transform.position = transform.position + new Vector3(0, 0, waypointDistance);
     }
