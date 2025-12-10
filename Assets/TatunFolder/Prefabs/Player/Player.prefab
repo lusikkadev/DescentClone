@@ -581,7 +581,7 @@ MonoBehaviour:
   angularAcceleration: 400
   rotationSmooth: 12
   invertPitch: 0
-  dodgeSpeed: 80
+  dodgeSpeed: 60
   dodgeCooldown: 1
   dodgeEnergyCost: 10
   canDodge: 1
