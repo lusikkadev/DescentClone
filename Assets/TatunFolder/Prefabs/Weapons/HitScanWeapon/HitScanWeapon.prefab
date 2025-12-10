@@ -10009,7 +10009,7 @@ MonoBehaviour:
   cooldown: 0.3
   hitMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 151
   energyPerShot: 2
   range: 200
   damage: 5

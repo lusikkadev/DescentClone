@@ -15062,7 +15062,8 @@ MonoBehaviour:
   cooldown: 0.1
   hitMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 151
+  energyPerShot: 1
   range: 200
   damage: 1
   impactPrefab: {fileID: 1337198075554910, guid: c9daee2145fff4047a3df7e642407c3d, type: 3}

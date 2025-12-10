@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     Vector3 localVelocity;
     public bool wasTransInput = false;
-    
+
 
     void Awake()
     {
@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerCamera == null)
         {
-            // fallback to main camera or WeaponManager's camera
+            // fallback
             playerCamera = Camera.main;
             var wm = FindFirstObjectByType<WeaponManager>();
             if (playerCamera == null && wm != null) playerCamera = wm.aimCamera;
@@ -158,10 +158,8 @@ public class PlayerController : MonoBehaviour
 
         float speed = rb.linearVelocity.magnitude;
 
-        // normalized bsaed on reference speed. Can change in inspector.
         float t = Mathf.Clamp01(speed / enginePitchReferenceSpeed);
 
-        // map to pitch range
         float targetPitch = Mathf.Lerp(enginePitchMin, enginePitchMax, t);
 
         // smooth
@@ -198,7 +196,7 @@ public class PlayerController : MonoBehaviour
         float throttle = leftStick.y;
         float vertical = triggerUp - triggerDown;
 
-        // Target local velocity (local-space)
+        // Target local velocity
         Vector3 targetLocalVelocity = new Vector3(
             strafe * maxStrafeSpeed,
             vertical * maxVerticalSpeed,
@@ -229,12 +227,12 @@ public class PlayerController : MonoBehaviour
         wasTransInput = hasTransInput;
 
 
-        // Rotation:
+        // Rotation
         float yawRate = rightStick.x * yawSpeed;
         float pitchRate = (invertPitch ? rightStick.y : -rightStick.y) * pitchSpeed;
         float rollRate = rollInput * rollSpeed;
 
-        // target angular velocity in local space
+        // target local angular velocity
         Vector3 targetLocalAngVelRad = new Vector3(pitchRate, yawRate, -rollRate) * Mathf.Deg2Rad;
         Vector3 targetWorldAngVel = transform.TransformDirection(targetLocalAngVelRad);
 
@@ -258,14 +256,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void StabilizeRoll(float dt)
+    void StabilizeRoll(float dt) // LOCAL SPACE WORKS FOR NOW, COULD BE BETTER
     {
         // get current local roll angle in degrees
         float currentRoll = transform.localEulerAngles.z;
-        // normalize to -180..180
+        // normalize
         if (currentRoll > 180f) currentRoll -= 360f;
 
-        // 45 degree segments, find nearest
+        // 90 degree segments, find nearest
         float targetRoll = Mathf.Round(currentRoll / 90f) * 90f;
 
         // Smoothly rotate towards target roll
@@ -298,23 +296,22 @@ public class PlayerController : MonoBehaviour
 
         if (normalComponent.magnitude < collisionNormalIgnoreThreshold)
         {
-            // Ignore small normal components. Jitter.
+            // ignore small normal components
             normalComponent = Vector3.zero;
         }
 
         //damping tangential velocity
         Vector3 newTangential = tangential * Mathf.Clamp01(collisionTangentialRetention);
 
-        // final velocity (tangential)
+        // final velocity
         rb.linearVelocity = newTangential;
         localVelocity = transform.InverseTransformDirection(newTangential);
 
-        // damping angular velocity
+        // damping
         rb.angularVelocity = rb.angularVelocity * Mathf.Clamp01(collisionAngularRetention);
 
     }
 
-    // Helpers
     static Vector2 ReadVector2(InputActionProperty prop)
     {
         if (prop == null || prop.action == null) return Vector2.zero;
@@ -352,14 +349,12 @@ public class PlayerController : MonoBehaviour
 
     void PerformDodge()
     {
-        // respect global energy lock
+        // Check for energy cooldown
         if (StatManager.Instance != null && StatManager.Instance.energyCooldown) return;
 
         if (!canDodge || rb == null || statManager == null) return;
 
-        
-
-        // read current inputs (including vertical) and require a deliberate direction to dodge
+        // read current inputs
         Vector2 leftStick = ReadVector2(translateAction);
         float triggerUp = ReadFloat(upAction);
         float triggerDown = ReadFloat(downAction);
@@ -386,7 +381,7 @@ public class PlayerController : MonoBehaviour
         canDodge = false;
         StartCoroutine(DodgeCooldown());
 
-        // compute dodge direction in world space using player orientation
+        // calculate dodge direction in world space
         Vector3 dodgeDirLocal = inputLocal.normalized;
         Vector3 dodgeWorldDir = transform.TransformDirection(dodgeDirLocal).normalized;
 
@@ -410,7 +405,7 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         cam.fieldOfView = target;
-        // return to normal quickly
+
         t = 0f;
         float retTime = duration * 0.6f;
         while (t < retTime)
@@ -427,7 +422,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(dodgeCooldown);
         canDodge = true;
 
-        // end using-energy state after dodge cooldown
+        // not using energy anymore
         if (statManager != null) statManager.IsUsingEnergy = false;
     }
 }
