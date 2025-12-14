@@ -8013,6 +8013,9 @@ MonoBehaviour:
   health: 100
   maxEnergy: 100
   energy: 100
+  hasRedKey: 0
+  hasBlueKey: 0
+  hasGreenKey: 0
   minEnergy: 0
   healthRegenCooldown: 3
   healthRegenAccumulator: 0
