@@ -22,6 +22,23 @@ MonoBehaviour:
   desiredCombatDistance: 10
   fireInterval: 1.5
   projectileSpeed: 40
+  detectionRange: 40
+  detectionAngle: 90
+  loseSightTime: 3
+  aimSpreadDegrees: 6
+  aimPredictionFactor: 0.6
   evadeAmplitude: 0.6
   evadeFrequency: 1.2
+  enableOrbit: 0
+  orbitSpeed: 2
+  orbitRadius: 0.6
+  orbitClockwise: 0
   rotationSpeed: 8
+  alarmRange: 18
+  alarmOthers: 1
+  stuckTimeThreshold: 0.6
+  stuckProbeRadius: 1.2
+  stuckVelocityThreshold: 0.6
+  unstuckForce: 6
+  drawDebugGizmos: 1
+  health: 50

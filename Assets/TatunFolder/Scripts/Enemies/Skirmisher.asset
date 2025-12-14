@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e89f991b357864291ac39738b937c9, type: 3}
   m_Name: Skirmisher
   m_EditorClassIdentifier: Assembly-CSharp::EnemyProfileSO
-  patrolSpeed: 8
+  patrolSpeed: 5
   chaseSpeed: 15
   maxAccel: 120
   linearDamping: 0.92
@@ -22,6 +22,23 @@ MonoBehaviour:
   desiredCombatDistance: 18
   fireInterval: 1
   projectileSpeed: 40
+  detectionRange: 40
+  detectionAngle: 90
+  loseSightTime: 3
+  aimSpreadDegrees: 3
+  aimPredictionFactor: 0.8
   evadeAmplitude: 2
   evadeFrequency: 3
-  rotationSpeed: 8
+  enableOrbit: 1
+  orbitSpeed: 0.5
+  orbitRadius: 1.2
+  orbitClockwise: 0
+  rotationSpeed: 15
+  alarmRange: 18
+  alarmOthers: 1
+  stuckTimeThreshold: 0.6
+  stuckProbeRadius: 1.2
+  stuckVelocityThreshold: 0.6
+  unstuckForce: 6
+  drawDebugGizmos: 1
+  health: 30

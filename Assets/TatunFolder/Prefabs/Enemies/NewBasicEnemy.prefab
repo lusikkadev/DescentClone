@@ -426,7 +426,7 @@ MonoBehaviour:
   patrolReach: 1
   patrolRandomize: 1
   detectionRange: 60
-  detectionAngle: 180
+  detectionAngle: 90
   obstacleMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -435,6 +435,7 @@ MonoBehaviour:
   fireInterval: 1.5
   projectileSpeed: 40
   loseSightTime: 5
+  aimSpreadDegrees: 3
   maxAccel: 40
   linearDamping: 0.9
   avoidDistance: 3
@@ -449,6 +450,10 @@ MonoBehaviour:
   rotationSpeed: 8
   alarmRange: 30
   alarmOthers: 1
+  stuckTimeThreshold: 0.6
+  stuckProbeRadius: 0.6
+  stuckVelocityThreshold: 0.6
+  unstuckForce: 6
   drawDebugGizmos: 0
   health: 50
 --- !u!135 &7870220880013572241

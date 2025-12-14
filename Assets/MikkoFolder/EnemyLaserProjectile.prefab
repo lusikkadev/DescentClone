@@ -316,6 +316,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Impact
   lifeTime: 4
   damage: 10
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 9
 --- !u!114 &1843750799334472348
 MonoBehaviour:
   m_ObjectHideFlags: 0

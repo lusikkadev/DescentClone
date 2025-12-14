@@ -9864,6 +9864,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Impact
   lifeTime: 1
+  damage: 10
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 129
 --- !u!1 &1793989332680384
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,13 +4,15 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    // References
     StatManager statManager;
+    Rigidbody rb;
+    AudioSource engineSound;
 
-
+    // Input bindings
     [Header("Input (assign InputAction / PlayerInput -> Actions)")]
     [Tooltip("Left stick (Vector2): x = strafe (left/right), y = throttle (forward/back)")]
     public InputActionProperty translateAction;
@@ -25,6 +27,7 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Dodge / Boost action (Button)")]
     public InputActionReference dodgeAction;
 
+    // Movement settings
     [Header("Translation")]
     public float maxForwardSpeed = 30f;
     public float maxStrafeSpeed = 30f;
@@ -33,60 +36,68 @@ public class PlayerController : MonoBehaviour
     public float driftDecay = 40f;
     public float inputDeadzone = 0.1f;
 
+    // Rotation settings
     [Header("Rotation")]
     public float yawSpeed = 120f;
     public float pitchSpeed = 120f;
     public float rollSpeed = 120f;
     public float angularAcceleration = 400f;
-    public float rotationSmooth = 12f;
     public bool invertPitch = false;
-    // Roll stabilize
+
+    // Roll stabilization
     float rollInputLastTime = 0f;
     bool isStabilizingRoll = false;
     float rollStabilizeDelay = 0.2f;
     float rollStabilizeSpeed = 1.5f;
 
+    // Dodge
     [Header("Dodge")]
     public float dodgeSpeed = 80f;
     public float dodgeCooldown = 1f;
     public float dodgeEnergyCost = 10f;
     public bool canDodge = true;
 
+    // Collision tuning
     [Header("Collision tuning")]
-    [Range(0f, 1f)]
-    [Tooltip("Fraction of tangential velocity to keep after a collision. 0 = complete stop along surface, 1 = keep full tangent speed.")]
-    public float collisionTangentialRetention = 0.0f;
-    [Range(0f, 1f)]
-    [Tooltip("Fraction of angular velocity to keep after a collision. 0 = stop rotating, 1 = keep full angular velocity.")]
-    public float collisionAngularRetention = 0.0f;
-    [Tooltip("If the normal (into-surface) component of velocity is small than this threshold, it's ignored.")]
+    [Range(0f, 1f)] public float collisionTangentialRetention = 0.0f;
+    [Range(0f, 1f)] public float collisionAngularRetention = 0.0f;
     public float collisionNormalIgnoreThreshold = 0.05f;
 
-    // Dodge visuals
+    // Unstuck and wall avoidance
+    [Header("Unstuck")]
+    public float stuckTimeThreshold = 0.3f;
+    public float stuckProbeRadius = 0.6f;
+    public float stuckVelocityThreshold = 0.6f;
+    public float unstuckForce = 4f;
+    public LayerMask unstuckObstacleMask = ~0;
+
+    [Header("Wall Avoidance")]
+    public bool enableWallAvoidance = true;
+    public float wallAvoidDistance = 1.2f;
+    public float wallAvoidStrength = 6f;
+    public LayerMask wallAvoidMask = ~0;
+    public bool respectPlayerInput = true;
+    [Range(0f, 1f)] public float respectInputThreshold = 0.5f;
+    [Header("Wall Avoidance Debug")] public bool drawWallAvoidGizmos = false;
+
+    // VFX / audio
     [Header("Dodge VFX")]
     public ParticleSystem dodgeVfx;
     public Camera playerCamera;
     public float dodgeFovBoost = 12f;
     public float dodgeFovTime = 0.5f;
 
-    // AUDIO for engine sound pitch
-    AudioSource engineSound;
     [Header("Engine sound (pitch by speed)")]
-    [Tooltip("Minimum pitch when nearly stationary")]
     public float enginePitchMin = 0.3f;
-    [Tooltip("Maximum pitch at or above reference speed")]
     public float enginePitchMax = 1.0f;
-    [Tooltip("Pitch to set when dodging (overrides speed-based pitch)")]
     public float dodgePitch = 1.15f;
-    [Tooltip("Smoothing speed for pitch changes")]
     public float enginePitchLerpSpeed = 6f;
-    [Tooltip("Reference speed used to map velocity -> pitch (meters/sec). If 0 will auto-calc from movement speeds)")]
     public float enginePitchReferenceSpeed = 0f;
 
-    Rigidbody rb;
+    // runtime state
     Vector3 localVelocity;
     public bool wasTransInput = false;
-
+    float stuckTimer = 0f;
 
     void Awake()
     {
@@ -96,10 +107,10 @@ public class PlayerController : MonoBehaviour
         rb.useGravity = false;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.maxAngularVelocity = 50f;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
         if (playerCamera == null)
         {
-            // fallback
             playerCamera = Camera.main;
             var wm = FindFirstObjectByType<WeaponManager>();
             if (playerCamera == null && wm != null) playerCamera = wm.aimCamera;
@@ -109,14 +120,12 @@ public class PlayerController : MonoBehaviour
         {
             engineSound.loop = true;
             if (!engineSound.isPlaying) engineSound.Play();
-
             engineSound.pitch = enginePitchMin;
         }
 
         if (enginePitchReferenceSpeed <= 0f)
         {
             enginePitchReferenceSpeed = Mathf.Max(maxForwardSpeed, maxStrafeSpeed, maxVerticalSpeed);
-
             if (enginePitchReferenceSpeed <= 0f) enginePitchReferenceSpeed = 1f;
         }
     }
@@ -128,7 +137,6 @@ public class PlayerController : MonoBehaviour
         rollAction.action?.Enable();
         upAction.action?.Enable();
         downAction.action?.Enable();
-
         dodgeAction?.action?.Enable();
     }
 
@@ -150,19 +158,11 @@ public class PlayerController : MonoBehaviour
     void UpdateEnginePitch()
     {
         if (engineSound == null || rb == null) return;
-
-        if (!canDodge)
-        {
-            engineSound.pitch = dodgePitch;
-        }
+        if (!canDodge) engineSound.pitch = dodgePitch;
 
         float speed = rb.linearVelocity.magnitude;
-
         float t = Mathf.Clamp01(speed / enginePitchReferenceSpeed);
-
         float targetPitch = Mathf.Lerp(enginePitchMin, enginePitchMax, t);
-
-        // smooth
         engineSound.pitch = Mathf.Lerp(engineSound.pitch, targetPitch, Time.deltaTime * enginePitchLerpSpeed);
     }
 
@@ -173,70 +173,49 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            //Reset scene
             UnityEngine.SceneManagement.SceneManager.LoadScene(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
         }
 
-        // Read inputs
         Vector2 leftStick = ReadVector2(translateAction);
         Vector2 rightStick = ReadVector2(rotateAction);
         float rollInput = ReadFloat(rollAction);
         float triggerUp = ReadFloat(upAction);
         float triggerDown = ReadFloat(downAction);
 
-        // Deadzones
         if (Mathf.Abs(leftStick.x) < inputDeadzone) leftStick.x = 0f;
         if (Mathf.Abs(leftStick.y) < inputDeadzone) leftStick.y = 0f;
         if (Mathf.Abs(triggerUp) < inputDeadzone) triggerUp = 0f;
         if (Mathf.Abs(triggerDown) < inputDeadzone) triggerDown = 0f;
 
-        // Map controls
         float strafe = leftStick.x;
         float throttle = leftStick.y;
         float vertical = triggerUp - triggerDown;
 
-        // Target local velocity
-        Vector3 targetLocalVelocity = new Vector3(
-            strafe * maxStrafeSpeed,
-            vertical * maxVerticalSpeed,
-            throttle * maxForwardSpeed
-        );
-
+        Vector3 targetLocalVelocity = new Vector3(strafe * maxStrafeSpeed, vertical * maxVerticalSpeed, throttle * maxForwardSpeed);
         bool hasTransInput = Mathf.Abs(strafe) > 1e-4f || Mathf.Abs(vertical) > 1e-4f || Mathf.Abs(throttle) > 1e-4f;
-
 
         if (hasTransInput)
         {
             localVelocity = Vector3.MoveTowards(localVelocity, targetLocalVelocity, acceleration * dt);
-
             rb.linearVelocity = transform.TransformDirection(localVelocity);
         }
         else
         {
-            // No input: driftii ja decay
             Vector3 currentWorldVel = rb.linearVelocity;
             Vector3 decayedWorldVel = Vector3.MoveTowards(currentWorldVel, Vector3.zero, driftDecay * dt);
             rb.linearVelocity = decayedWorldVel;
-
-            // Keep local velocity for next input
             localVelocity = transform.InverseTransformDirection(decayedWorldVel);
-
         }
 
         wasTransInput = hasTransInput;
 
-
-        // Rotation
         float yawRate = rightStick.x * yawSpeed;
         float pitchRate = (invertPitch ? rightStick.y : -rightStick.y) * pitchSpeed;
         float rollRate = rollInput * rollSpeed;
 
-        // target local angular velocity
         Vector3 targetLocalAngVelRad = new Vector3(pitchRate, yawRate, -rollRate) * Mathf.Deg2Rad;
         Vector3 targetWorldAngVel = transform.TransformDirection(targetLocalAngVelRad);
-
-        // Smooth angular velocity change
         float angAccelRad = angularAcceleration * Mathf.Deg2Rad;
         rb.angularVelocity = Vector3.MoveTowards(rb.angularVelocity, targetWorldAngVel, angAccelRad * dt);
 
@@ -250,43 +229,27 @@ public class PlayerController : MonoBehaviour
             isStabilizingRoll = true;
         }
 
-        if (isStabilizingRoll)
-        {
-            StabilizeRoll(dt);
-        }
+        if (isStabilizingRoll) StabilizeRoll(dt);
+
+        CheckStuckAndUnstuck();
+        ApplyWallAvoidance(dt, inputLocal: new Vector3(strafe, vertical, throttle));
     }
 
-    void StabilizeRoll(float dt) // LOCAL SPACE WORKS FOR NOW, COULD BE BETTER
+    void StabilizeRoll(float dt)
     {
-        // get current local roll angle in degrees
         float currentRoll = transform.localEulerAngles.z;
-        // normalize
         if (currentRoll > 180f) currentRoll -= 360f;
-
-        // 90 degree segments, find nearest
         float targetRoll = Mathf.Round(currentRoll / 90f) * 90f;
-
-        // Smoothly rotate towards target roll
         float newRoll = Mathf.LerpAngle(currentRoll, targetRoll, rollStabilizeSpeed * dt);
-
-        // Apply new roll
         Vector3 euler = transform.localEulerAngles;
         euler.z = newRoll;
         transform.localEulerAngles = euler;
-
-        // Stop if close enough
-        if (Mathf.Abs(Mathf.DeltaAngle(newRoll, targetRoll)) < 0.5f)
-        {
-            isStabilizingRoll = false;
-        }
+        if (Mathf.Abs(Mathf.DeltaAngle(newRoll, targetRoll)) < 0.5f) isStabilizingRoll = false;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Process hits and prevent going crazy
-
         if (collision.contactCount == 0) return;
-
         ContactPoint contact = collision.GetContact(0);
         Vector3 normal = contact.normal;
 
@@ -294,43 +257,114 @@ public class PlayerController : MonoBehaviour
         Vector3 normalComponent = Vector3.Project(worldVel, normal);
         Vector3 tangential = worldVel - normalComponent;
 
-        if (normalComponent.magnitude < collisionNormalIgnoreThreshold)
-        {
-            // ignore small normal components
-            normalComponent = Vector3.zero;
-        }
+        if (normalComponent.magnitude < collisionNormalIgnoreThreshold) normalComponent = Vector3.zero;
 
-        //damping tangential velocity
         Vector3 newTangential = tangential * Mathf.Clamp01(collisionTangentialRetention);
-
-        // final velocity
         rb.linearVelocity = newTangential;
         localVelocity = transform.InverseTransformDirection(newTangential);
-
-        // damping
         rb.angularVelocity = rb.angularVelocity * Mathf.Clamp01(collisionAngularRetention);
+    }
 
+    void CheckStuckAndUnstuck()
+    {
+        if (rb == null) return;
+        if (rb.linearVelocity.magnitude < stuckVelocityThreshold)
+        {
+            Collider[] cols = Physics.OverlapSphere(transform.position, stuckProbeRadius, unstuckObstacleMask, QueryTriggerInteraction.Ignore);
+            if (cols != null && cols.Length > 0)
+            {
+                stuckTimer += Time.fixedDeltaTime;
+                if (stuckTimer > stuckTimeThreshold)
+                {
+                    Vector3 push = Vector3.zero;
+                    foreach (var c in cols)
+                    {
+                        if (c == null) continue;
+                        Vector3 closest = c.ClosestPoint(transform.position);
+                        push += (transform.position - closest).normalized;
+                    }
+                    if (push.sqrMagnitude < 1e-6f) push = transform.forward;
+                    push.Normalize();
+                    rb.AddForce(push * unstuckForce, ForceMode.VelocityChange);
+                    stuckTimer = 0f;
+                }
+                return;
+            }
+        }
+        stuckTimer = 0f;
+    }
+
+    Vector3 ComputeWallAvoidanceVector()
+    {
+        if (!enableWallAvoidance || rb == null) return Vector3.zero;
+
+        // Sample rays in multiple directions and accumulate surface normals weighted by proximity.
+        Vector3[] sampleDirs = new Vector3[]
+        {
+            Vector3.forward, Vector3.back, Vector3.right, Vector3.left, Vector3.up, Vector3.down,
+            (Vector3.forward + Vector3.right).normalized,
+            (Vector3.forward + Vector3.left).normalized,
+            (Vector3.back + Vector3.right).normalized,
+            (Vector3.back + Vector3.left).normalized,
+            (Vector3.up + Vector3.forward).normalized,
+            (Vector3.up + Vector3.back).normalized,
+            (Vector3.up + Vector3.right).normalized,
+            (Vector3.up + Vector3.left).normalized,
+            (Vector3.down + Vector3.forward).normalized,
+            (Vector3.down + Vector3.back).normalized,
+            (Vector3.down + Vector3.right).normalized,
+            (Vector3.down + Vector3.left).normalized
+        };
+
+        Vector3 push = Vector3.zero;
+        float maxRange = Mathf.Max(0.001f, wallAvoidDistance);
+
+        for (int i = 0; i < sampleDirs.Length; i++)
+        {
+            Vector3 dirWorld = transform.TransformDirection(sampleDirs[i]);
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, dirWorld, out hit, maxRange, wallAvoidMask, QueryTriggerInteraction.Ignore))
+            {
+                if (hit.collider == null) continue;
+                if (hit.collider.gameObject == gameObject) continue;
+                if (hit.collider.transform.IsChildOf(transform)) continue;
+
+                float weight = Mathf.Clamp01((maxRange - hit.distance) / maxRange);
+                push += hit.normal * weight;
+            }
+        }
+
+        if (push.sqrMagnitude < 1e-6f) return Vector3.zero;
+        return push.normalized;
+    }
+
+    void ApplyWallAvoidance(float dt, Vector3 inputLocal)
+    {
+        if (!enableWallAvoidance || rb == null) return;
+        Vector3 avoid = ComputeWallAvoidanceVector();
+        if (avoid.sqrMagnitude < 1e-6f) return;
+
+        float strength = wallAvoidStrength;
+        if (respectPlayerInput && inputLocal.sqrMagnitude > 1e-4f)
+        {
+            Vector3 inputWorld = transform.TransformDirection(inputLocal.normalized);
+            float dotIntoObstacle = Vector3.Dot(inputWorld, -avoid);
+            if (dotIntoObstacle > respectInputThreshold) strength *= 0.25f;
+        }
+
+        rb.AddForce(avoid * strength, ForceMode.Acceleration);
+        if (drawWallAvoidGizmos) Debug.DrawRay(transform.position, avoid * 1.5f, Color.cyan, 0.1f);
     }
 
     static Vector2 ReadVector2(InputActionProperty prop)
     {
         if (prop == null || prop.action == null) return Vector2.zero;
         var a = prop.action;
-        try
-        {
-            return a.ReadValue<Vector2>();
-        }
+        try { return a.ReadValue<Vector2>(); }
         catch
         {
-            try
-            {
-                Vector3 v3 = a.ReadValue<Vector3>();
-                return new Vector2(v3.x, v3.y);
-            }
-            catch
-            {
-                return Vector2.zero;
-            }
+            try { Vector3 v3 = a.ReadValue<Vector3>(); return new Vector2(v3.x, v3.y); }
+            catch { return Vector2.zero; }
         }
     }
 
@@ -340,21 +374,13 @@ public class PlayerController : MonoBehaviour
         try { return prop.action.ReadValue<float>(); } catch { return 0f; }
     }
 
-    // Dodge / Boost action towards move direction using dodgeMultiplier for speed
-
-    public void OnDodge()
-    {
-        PerformDodge();
-    }
+    public void OnDodge() { PerformDodge(); }
 
     void PerformDodge()
     {
-        // Check for energy cooldown
         if (StatManager.Instance != null && StatManager.Instance.energyCooldown) return;
-
         if (!canDodge || rb == null || statManager == null) return;
 
-        // read current inputs
         Vector2 leftStick = ReadVector2(translateAction);
         float triggerUp = ReadFloat(upAction);
         float triggerDown = ReadFloat(downAction);
@@ -363,31 +389,20 @@ public class PlayerController : MonoBehaviour
         float vertical = triggerUp - triggerDown;
 
         Vector3 inputLocal = new Vector3(strafe, vertical, throttle);
-
-        // require explicit input direction — abort if no direction is provided
         if (inputLocal.sqrMagnitude <= 1e-4f) return;
 
-        // consume energy
         statManager.UseEnergy(dodgeEnergyCost);
-
-        // mark using-energy to pause regen
         statManager.IsUsingEnergy = true;
 
-        // visuals
         dodgeVfx?.Play();
-        if (playerCamera != null)
-            StartCoroutine(DoDodgeFov(playerCamera, dodgeFovBoost, dodgeFovTime));
+        if (playerCamera != null) StartCoroutine(DoDodgeFov(playerCamera, dodgeFovBoost, dodgeFovTime));
 
         canDodge = false;
         StartCoroutine(DodgeCooldown());
 
-        // calculate dodge direction in world space
         Vector3 dodgeDirLocal = inputLocal.normalized;
         Vector3 dodgeWorldDir = transform.TransformDirection(dodgeDirLocal).normalized;
-
-        // apply fixed dodge speed
         Vector3 dodgeWorldVel = dodgeWorldDir * dodgeSpeed;
-
         rb.linearVelocity = dodgeWorldVel;
         localVelocity = transform.InverseTransformDirection(dodgeWorldVel);
     }
@@ -405,14 +420,13 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         cam.fieldOfView = target;
-
         t = 0f;
         float retTime = duration * 0.6f;
         while (t < retTime)
         {
             cam.fieldOfView = Mathf.Lerp(target, startFov, t / retTime);
             t += Time.deltaTime;
-            yield return null;
+            yield return null;  
         }
         cam.fieldOfView = startFov;
     }
@@ -421,8 +435,6 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(dodgeCooldown);
         canDodge = true;
-
-        // not using energy anymore
         if (statManager != null) statManager.IsUsingEnergy = false;
     }
 }

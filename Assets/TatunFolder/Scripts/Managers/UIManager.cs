@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
 
     Image energyFillImage;
     Coroutine energyFlashCoroutine;
+    Coroutine hitFlashCoroutine;
 
     private void Awake()
     {
@@ -135,4 +136,33 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(interval);
         }
     }
+
+    public IEnumerator HitFlashRoutine()
+    {
+        if (hudImage == null) yield break;
+        Color hudFlashColor = Color.red;
+        float interval = 0.35f;
+        for (int i = 0; i < 2; i++)
+        {
+            hudImage.color = hudFlashColor;
+            yield return new WaitForSeconds(interval);
+            hudImage.color = hudColor;
+            yield return new WaitForSeconds(interval);
+        }
+
+    }
+
+    public void PlayerHit()
+    {
+        Debug.Log("UIManager: PlayerHit called");
+        if (hudImage == null) return;
+        Debug.Log("UIManager: Starting HitFlashRoutine");
+        if (hitFlashCoroutine != null)
+        {
+            StopCoroutine(hitFlashCoroutine);
+            hitFlashCoroutine = null;
+        }
+        hitFlashCoroutine = StartCoroutine(HitFlashRoutine());
+    }
+
 }

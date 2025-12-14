@@ -21,6 +21,10 @@ public class ShockWave : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
+            if (!other.gameObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
+            {
+                return;
+            }
             // add forece to enemy rigidbody
 
             Rigidbody enemyRigidbody = other.gameObject.GetComponent<Rigidbody>();

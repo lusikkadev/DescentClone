@@ -14788,7 +14788,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 70732f48d4ee03d498252d713a81643a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14932,7 +14932,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 70732f48d4ee03d498252d713a81643a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15062,10 +15062,10 @@ MonoBehaviour:
   cooldown: 0.1
   hitMask:
     serializedVersion: 2
-    m_Bits: 151
+    m_Bits: 129
   energyPerShot: 1
   range: 200
-  damage: 1
+  damage: 2
   impactPrefab: {fileID: 1337198075554910, guid: c9daee2145fff4047a3df7e642407c3d, type: 3}
   tracerPrefab: {fileID: 1225384823623966019, guid: 8852c4be506ddc54ea09ecfaa962730a, type: 3}
   tracerLifetime: 0.3

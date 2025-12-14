@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 70732f48d4ee03d498252d713a81643a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10009,7 +10009,7 @@ MonoBehaviour:
   cooldown: 0.3
   hitMask:
     serializedVersion: 2
-    m_Bits: 151
+    m_Bits: 129
   energyPerShot: 2
   range: 200
   damage: 5

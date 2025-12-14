@@ -89,8 +89,20 @@ public class HitScanWeapon : WeaponBase
         if (Physics.Raycast(ray, out var hit, range, hitMask, QueryTriggerInteraction.Ignore))
         {
             end = hit.point;
+            // Try to deliver damage to the hit target. Support IDamageable on collider, on parent,
+            // and fallback to SendMessageUpwards("TakeDamage", amount) for loose handlers.
             var dmg = hit.collider.GetComponent<IDamageable>();
-            if (dmg != null) dmg.TakeDamage(damage);
+            if (dmg != null)
+            {
+                dmg.TakeDamage(damage);
+            }
+            else
+            {
+                var parentDmg = hit.collider.GetComponentInParent<IDamageable>();
+                if (parentDmg != null) parentDmg.TakeDamage(damage);
+                else hit.collider.SendMessageUpwards("TakeDamage", damage, SendMessageOptions.DontRequireReceiver);
+            }
+
             if (impactPrefab != null)
                 Instantiate(impactPrefab, hit.point, Quaternion.LookRotation(hit.normal));
         }

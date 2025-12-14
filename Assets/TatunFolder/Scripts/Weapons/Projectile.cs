@@ -51,7 +51,18 @@ public class Projectile : MonoBehaviour
         mr.enabled = false;
         // damage
         var dmg = collision.collider.GetComponent<IDamageable>();
-        if (dmg != null) dmg.TakeDamage(damage);
+        if (dmg != null) {
+            dmg.TakeDamage(damage);
+        }
+        else
+        {
+            var parentDmg = collision.collider.GetComponentInParent<IDamageable>();
+            if (parentDmg != null) parentDmg.TakeDamage(damage);
+            else
+            {
+                collision.collider.SendMessageUpwards("TakeDamage", damage, SendMessageOptions.DontRequireReceiver);
+            }
+        }
 
         explosionEffect?.Play();
         StartCoroutine(DestroyAfterEffect());

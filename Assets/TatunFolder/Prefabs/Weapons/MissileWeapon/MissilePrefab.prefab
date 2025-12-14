@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3411395673252094505}
   - component: {fileID: 3312593353628263985}
   - component: {fileID: 3279437100966613473}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4859,7 +4859,7 @@ GameObject:
   - component: {fileID: 3407077174945047117}
   - component: {fileID: 3280869742761135621}
   - component: {fileID: 3280001595125065651}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: RocketTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9794,7 +9794,7 @@ GameObject:
   - component: {fileID: 3411460088492142533}
   - component: {fileID: 3280658087822011313}
   - component: {fileID: 3279934749793569089}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Embers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14619,7 +14619,7 @@ GameObject:
   - component: {fileID: 3410996044122465013}
   - component: {fileID: 3312616803678741557}
   - component: {fileID: 3279897981054614093}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Twinkle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19534,7 +19534,7 @@ GameObject:
   - component: {fileID: 3407149753590794457}
   - component: {fileID: 3280830463173852435}
   - component: {fileID: 3279708124026093451}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Fire Small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24382,7 +24382,7 @@ GameObject:
   - component: {fileID: 3407134764027463923}
   - component: {fileID: 3280627087787606933}
   - component: {fileID: 3279783946432233003}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Launch Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29288,7 +29288,7 @@ GameObject:
   - component: {fileID: 8670340075158208859}
   - component: {fileID: 8053968000834078755}
   - component: {fileID: 2467832640533600732}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: ShockWaveArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29357,7 +29357,7 @@ GameObject:
   - component: {fileID: 6479867705677174247}
   - component: {fileID: 3870596063295209087}
   - component: {fileID: 3698196661689095693}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: MissilePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29414,7 +29414,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: ef4acf9f9343da5478805233b69b7ce1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -29450,7 +29450,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -29503,7 +29503,7 @@ MonoBehaviour:
   damage: 20
   hitMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 129
   explosionEffect: {fileID: 6970749452979738344}
   trailEffect: {fileID: 3280869742761135621}
   shockWave: {fileID: 4834478892292652587}
@@ -29518,7 +29518,7 @@ GameObject:
   - component: {fileID: 7093327873694702896}
   - component: {fileID: 6971309658682316436}
   - component: {fileID: 6969912685411605624}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Shockwave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34424,7 +34424,7 @@ GameObject:
   - component: {fileID: 7093607250216028036}
   - component: {fileID: 6971208104690670548}
   - component: {fileID: 6970373069768849394}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Lightning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39330,7 +39330,7 @@ GameObject:
   - component: {fileID: 7092643654850669894}
   - component: {fileID: 6970749452979738344}
   - component: {fileID: 6970099336000789098}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: EnergyExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44267,7 +44267,7 @@ GameObject:
   - component: {fileID: 7093049644020420094}
   - component: {fileID: 6971465253359054858}
   - component: {fileID: 6969907634501647016}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Embers
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -363,9 +363,9 @@ MonoBehaviour:
   ownerRb: {fileID: 2257738071151159198}
   weaponHolder: {fileID: 8952808367840640961}
   weapons:
-  - {fileID: 2169571422202563499, guid: f925fc0eb2e684d49b41ddf1b289f53c, type: 3}
   - {fileID: 7446204508204908133, guid: 312369fd417c5a74ab51038eb19f8ac7, type: 3}
   - {fileID: 7446204508204908133, guid: 99b392124137236488e5a00af311ffab, type: 3}
+  - {fileID: 2169571422202563499, guid: f925fc0eb2e684d49b41ddf1b289f53c, type: 3}
   handleInput: 1
   fireAction: {fileID: 8281635707354912270, guid: a43678ea1e7566c448ff4308f3a86330, type: 3}
   nextWeapon: {fileID: 5963526400164629005, guid: a43678ea1e7566c448ff4308f3a86330, type: 3}
@@ -416,6 +416,7 @@ GameObject:
   - component: {fileID: 2346970768239039846}
   - component: {fileID: 6630065844468381013}
   - component: {fileID: 648379278333537270}
+  - component: {fileID: 3180441611732208831}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -588,6 +589,22 @@ MonoBehaviour:
   collisionTangentialRetention: 0
   collisionAngularRetention: 0
   collisionNormalIgnoreThreshold: 0.5
+  stuckTimeThreshold: 0.3
+  stuckProbeRadius: 0.6
+  stuckVelocityThreshold: 0.6
+  unstuckForce: 4
+  unstuckObstacleMask:
+    serializedVersion: 2
+    m_Bits: 1
+  enableWallAvoidance: 1
+  wallAvoidDistance: 2
+  wallAvoidStrength: 60
+  wallAvoidMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  respectPlayerInput: 1
+  respectInputThreshold: 0.5
+  drawWallAvoidGizmos: 1
   dodgeVfx: {fileID: 9080232361773265199}
   playerCamera: {fileID: 3286377408955417559}
   dodgeFovBoost: 12
@@ -778,6 +795,27 @@ MonoBehaviour:
   applyHRTFToPathing: 0
   pathingMixLevel: 1
   normalizePathingEQ: 0
+--- !u!135 &3180441611732208831
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6743609936654256215}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9069108944520680234
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,7 +833,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7295398206352209849
 Transform:
   m_ObjectHideFlags: 0

@@ -11,6 +11,8 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
 
     [Header("References")]
     public Transform firingPosition;
+    [Tooltip("Optional: multiple firing points. If set, these will be used instead of single firingPosition.")]
+    public Transform[] firingPositions;
     public GameObject projectilePrefab;
 
     [Header("Patrol (box)")]
@@ -30,6 +32,18 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
     public float fireInterval = 1f;
     public float projectileSpeed = 60f;
     public float loseSightTime = 3.0f;
+
+    [Header("Multi-muzzle firing")]
+    [Tooltip("When true, fire from muzzles sequentially with delay between each muzzle.")]
+    public bool sequentialMuzzleFire = false;
+    [Tooltip("Delay in seconds between firing successive muzzles when sequential firing is enabled.")]
+    public float muzzleSequentialDelay = 0.08f;
+
+    [Tooltip("Maximum cone angle in degrees for firing inaccuracy. Set to 0 for perfectly forward shots.")]
+    public float aimSpreadDegrees = 6f;
+    [Tooltip("0 = fire straight from muzzle, 1 = fully lead shots using target velocity/ projectile speed.")]
+    [Range(0f, 1f)]
+    public float aimPredictionFactor = 0.6f;
 
     [Header("Movement / avoidance")]
     public float maxAccel = 40f;
@@ -76,6 +90,7 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
     Rigidbody rb;
     Transform player;
     Rigidbody playerRb;
+    [SerializeField] BossWeakSpot[] weakSpots;
     Vector3[] patrolPoints;
     int patrolIndex = 0;
     State state = State.Patrol;
@@ -88,6 +103,13 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
     float stuckTimer = 0f;
 
     [SerializeField] int health = 50;
+
+    // Expose select internals for helper components
+    public Transform Player => player;
+    public Rigidbody Rb => rb;
+    [Header("Boss options")]
+    [Tooltip("When true, only hits to the Boss eye (via BossEye component) will reduce health. Body hits still alert the boss.")]
+    public bool requireEyeHits = false;
 
     void Awake()
     {
@@ -115,6 +137,14 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
 
         BuildPatrolPoints();
         if (profile != null) ApplyProfile(profile);
+
+        // register weak spots if present on children
+        weakSpots = GetComponentsInChildren<BossWeakSpot>(true);
+        if (weakSpots != null && weakSpots.Length > 0)
+        {
+            foreach (var ws in weakSpots)
+                ws?.RegisterOwner(this);
+        }
     }
 
     public void ApplyProfile(EnemyProfileSO p)
@@ -130,9 +160,26 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
         desiredCombatDistance = p.desiredCombatDistance;
         fireInterval = p.fireInterval;
         projectileSpeed = p.projectileSpeed;
+        detectionRange = p.detectionRange;
+        detectionAngle = p.detectionAngle;
+        loseSightTime = p.loseSightTime;
+        aimSpreadDegrees = p.aimSpreadDegrees;
+        aimPredictionFactor = p.aimPredictionFactor;
         evadeAmplitude = p.evadeAmplitude;
         evadeFrequency = p.evadeFrequency;
+        enableOrbit = p.enableOrbit;
+        orbitSpeed = p.orbitSpeed;
+        orbitRadius = p.orbitRadius;
+        orbitClockwise = p.orbitClockwise;
         rotationSpeed = p.rotationSpeed;
+        alarmRange = p.alarmRange;
+        alarmOthers = p.alarmOthers;
+        stuckTimeThreshold = p.stuckTimeThreshold;
+        stuckProbeRadius = p.stuckProbeRadius;
+        stuckVelocityThreshold = p.stuckVelocityThreshold;
+        unstuckForce = p.unstuckForce;
+        drawDebugGizmos = p.drawDebugGizmos;
+        health = p.health;
     }
 
     void BuildPatrolPoints()
@@ -458,17 +505,69 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
 
     void FireAtPlayer()
     {
-        if (projectilePrefab == null || firingPosition == null || player == null) return;
+        if (projectilePrefab == null || player == null) return;
 
-        Vector3 shooterPos = firingPosition.position;
+        // choose muzzles: prefer firingPositions array if populated, otherwise fallback to single firingPosition
+        Transform[] muzzles = firingPositions != null && firingPositions.Length > 0 ? firingPositions : (firingPosition != null ? new Transform[] { firingPosition } : null);
+        if (muzzles == null || muzzles.Length == 0) return;
+
+        if (sequentialMuzzleFire)
+        {
+            StartCoroutine(FireMuzzlesSequential(muzzles));
+        }
+        else
+        {
+            // fire all at once
+            foreach (var m in muzzles)
+                SpawnProjectileFromMuzzle(m);
+        }
+    }
+
+    IEnumerator FireMuzzlesSequential(Transform[] muzzles)
+    {
+        for (int i = 0; i < muzzles.Length; i++)
+        {
+            var m = muzzles[i];
+            if (m != null) SpawnProjectileFromMuzzle(m);
+            if (i < muzzles.Length - 1)
+                yield return new WaitForSeconds(muzzleSequentialDelay);
+        }
+    }
+
+    void SpawnProjectileFromMuzzle(Transform muzzle)
+    {
+        if (muzzle == null) return;
+        Vector3 shooterPos = muzzle.position;
         Vector3 shooterVel = rb != null ? rb.linearVelocity : Vector3.zero;
-        Vector3 targetVel = playerRb != null ? playerRb.linearVelocity : Vector3.zero;
 
-        Vector3 aimDir = ComputeLeadDirection(shooterPos, player.position, shooterVel, targetVel, projectileSpeed);
+        // Base forward direction from muzzle
+        Vector3 aimDir = muzzle.forward;
+
+        // Compute a lead direction based on target motion and projectile speed
+        Vector3 targetVel = playerRb != null ? playerRb.linearVelocity : Vector3.zero;
+        Vector3 leadDir = ComputeLeadDirection(shooterPos, player.position, shooterVel, targetVel, projectileSpeed);
+
+        // Blend between straight-fire and computed lead according to aimPredictionFactor
+        if (aimPredictionFactor > 0f)
+        {
+            aimDir = Vector3.Slerp(aimDir, leadDir, Mathf.Clamp01(aimPredictionFactor)).normalized;
+        }
+
+        // Apply inaccuracy/spread on top
+        if (aimSpreadDegrees > 0f)
+        {
+            float yaw = Random.Range(-aimSpreadDegrees, aimSpreadDegrees);
+            float pitch = Random.Range(-aimSpreadDegrees, aimSpreadDegrees);
+            aimDir = Quaternion.AngleAxis(yaw, muzzle.up) * Quaternion.AngleAxis(pitch, muzzle.right) * aimDir;
+            aimDir.Normalize();
+        }
+
         var proj = Instantiate(projectilePrefab, shooterPos, Quaternion.LookRotation(aimDir));
         Rigidbody prb = proj.GetComponent<Rigidbody>();
         if (prb != null)
             prb.linearVelocity = shooterVel + aimDir * projectileSpeed;
+
+        AudioFW.Play(id: "EnemyLaser", pos: prb != null ? prb.position : shooterPos);
     }
 
     void AlarmNearby()
@@ -518,6 +617,46 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
 
     #region Damage/Death
     public void TakeDamage(int amount)
+    {
+        // Move towards the player when hit
+        if (player != null)
+            lastKnownPlayerPos = player.position;
+        if (lastKnownPlayerPos != null)
+        {
+            lastSeenTime = Time.time;
+            state = State.Chasing;
+        }
+
+        // If we have registered weak spots, body hits do not damage the boss; weak spots control death
+        if (weakSpots != null && weakSpots.Length > 0)
+        {
+            // still alert/aggro but do not subtract health
+            return;
+        }
+
+        if (requireEyeHits)
+        {
+            // Body was hit but boss only takes damage via eye; still react but don't subtract health.
+            return;
+        }
+
+        ApplyDamage(amount);
+    }
+
+    // Called by weak spots when destroyed
+    public void WeakSpotDestroyed(BossWeakSpot spot)
+    {
+        if (weakSpots == null) return;
+        bool all = true;
+        foreach (var ws in weakSpots)
+        {
+            if (ws != null && !ws.isDestroyed) { all = false; break; }
+        }
+        if (all) Die();
+    }
+
+    // Apply actual damage regardless of requireEyeHits flag (used by BossEye)
+    public void ApplyDamage(int amount)
     {
         health -= amount;
         if (health <= 0) Die();

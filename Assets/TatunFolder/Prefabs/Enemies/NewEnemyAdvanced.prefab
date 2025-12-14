@@ -439,9 +439,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewBasicEnemyAI
   profile: {fileID: 11400000, guid: 02123a97a6b0f1445af89293cd8c4af2, type: 2}
   firingPosition: {fileID: 8876813651180673534}
+  firingPositions: []
   projectilePrefab: {fileID: 5447639557416043054, guid: f1e380c6079395948bd614b1f83d9a39, type: 3}
   patrolCenter: {fileID: 0}
-  patrolBoxSize: {x: 10, y: 4, z: 6}
+  patrolBoxSize: {x: 25, y: 10, z: 30}
   patrolPointCount: 4
   patrolSpeed: 6
   patrolReach: 1
@@ -456,6 +457,10 @@ MonoBehaviour:
   fireInterval: 1
   projectileSpeed: 60
   loseSightTime: 3
+  sequentialMuzzleFire: 0
+  muzzleSequentialDelay: 0.08
+  aimSpreadDegrees: 0
+  aimPredictionFactor: 0.6
   maxAccel: 40
   linearDamping: 0.92
   avoidDistance: 3
@@ -475,7 +480,9 @@ MonoBehaviour:
   stuckVelocityThreshold: 0.6
   unstuckForce: 6
   drawDebugGizmos: 1
-  health: 50
+  weakSpots: []
+  health: 30
+  requireEyeHits: 0
 --- !u!1001 &3172255803056150426
 PrefabInstance:
   m_ObjectHideFlags: 0
