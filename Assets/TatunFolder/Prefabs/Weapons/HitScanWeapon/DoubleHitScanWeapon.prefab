@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5516763367550574068}
   - component: {fileID: 4077392106779909428}
   - component: {fileID: 1259123303658938591}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FlashHeadon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,11 +27,11 @@ Transform:
   m_GameObject: {fileID: 1264732749363770996}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1578677, z: 1.102848}
-  m_LocalScale: {x: 3.4069219, y: 2.0437217, z: 2.1416945}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3373697525794421054}
+  m_Father: {fileID: 1458007681793628904}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &4077392106779909428
 ParticleSystem:
@@ -4917,7 +4917,7 @@ GameObject:
   - component: {fileID: 1458007681793628904}
   - component: {fileID: 182036462048679838}
   - component: {fileID: 7743464800666339689}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MuzzleFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4933,11 +4933,12 @@ Transform:
   m_GameObject: {fileID: 1396696178032615154}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1578677, z: 1.102848}
-  m_LocalScale: {x: 3.406922, y: 2.0437217, z: 2.1416945}
+  m_LocalPosition: {x: 0, y: 0, z: 0.081999995}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3373697525794421054}
+  m_Children:
+  - {fileID: 5516763367550574068}
+  m_Father: {fileID: 9055261119343548415}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &182036462048679838
 ParticleSystem:
@@ -9823,7 +9824,7 @@ GameObject:
   - component: {fileID: 558316655380462028}
   - component: {fileID: 7346798840761858577}
   - component: {fileID: 1785839680182281718}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MuzzleFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9839,11 +9840,12 @@ Transform:
   m_GameObject: {fileID: 2530814309134683050}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.22945231, z: 1.4139386}
-  m_LocalScale: {x: 3.406922, y: 1.637551, z: 2.2058504}
+  m_LocalPosition: {x: 0, y: 0, z: 0.13100009}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6793711563748421390}
+  m_Children:
+  - {fileID: 2603160781999323607}
+  m_Father: {fileID: 3497692653245032356}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &7346798840761858577
 ParticleSystem:
@@ -14855,10 +14857,11 @@ Transform:
   m_GameObject: {fileID: 4493116680863145510}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.22945231, z: 1.1249721}
+  m_LocalPosition: {x: 0, y: -0.108, z: 0.982}
   m_LocalScale: {x: 3.4069223, y: 1.637551, z: 2.2058501}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 558316655380462028}
   m_Father: {fileID: 6793711563748421390}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4758369936897491788
@@ -14998,10 +15001,11 @@ Transform:
   m_GameObject: {fileID: 7430299680528254507}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1578677, z: 0.9272291}
+  m_LocalPosition: {x: 0, y: -0.144, z: 1.133}
   m_LocalScale: {x: 3.4069223, y: 2.0437217, z: 2.1416945}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1458007681793628904}
   m_Father: {fileID: 3373697525794421054}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7981917527984686926
@@ -15265,7 +15269,7 @@ GameObject:
   - component: {fileID: 2603160781999323607}
   - component: {fileID: 940451934557354385}
   - component: {fileID: 1864227849273348407}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FlashHeadon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15281,11 +15285,11 @@ Transform:
   m_GameObject: {fileID: 9089215037413347596}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.22945231, z: 1.4139386}
-  m_LocalScale: {x: 3.4069219, y: 1.637551, z: 2.2058506}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6793711563748421390}
+  m_Father: {fileID: 558316655380462028}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &940451934557354385
 ParticleSystem:
@@ -20224,9 +20228,21 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4926887409236218260, guid: 2b13ff26b22c6894a9c4aeee3c9fd3b2, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2b13ff26b22c6894a9c4aeee3c9fd3b2, type: 3}
       propertyPath: m_Name
       value: BasicLaserWeapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2b13ff26b22c6894a9c4aeee3c9fd3b2, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162583871730536078, guid: 2b13ff26b22c6894a9c4aeee3c9fd3b2, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20234,12 +20250,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2b13ff26b22c6894a9c4aeee3c9fd3b2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9055261119343548415}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2b13ff26b22c6894a9c4aeee3c9fd3b2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1458007681793628904}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2b13ff26b22c6894a9c4aeee3c9fd3b2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5516763367550574068}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b13ff26b22c6894a9c4aeee3c9fd3b2, type: 3}
 --- !u!4 &3373697525794421054 stripped
@@ -20307,9 +20317,21 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4926887409236218260, guid: 2b13ff26b22c6894a9c4aeee3c9fd3b2, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2b13ff26b22c6894a9c4aeee3c9fd3b2, type: 3}
       propertyPath: m_Name
       value: BasicLaserWeapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2b13ff26b22c6894a9c4aeee3c9fd3b2, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162583871730536078, guid: 2b13ff26b22c6894a9c4aeee3c9fd3b2, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20317,12 +20339,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2b13ff26b22c6894a9c4aeee3c9fd3b2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3497692653245032356}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2b13ff26b22c6894a9c4aeee3c9fd3b2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 558316655380462028}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2b13ff26b22c6894a9c4aeee3c9fd3b2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2603160781999323607}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b13ff26b22c6894a9c4aeee3c9fd3b2, type: 3}
 --- !u!4 &6793711563748421390 stripped

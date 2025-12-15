@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3407077174945047117}
   - component: {fileID: 3280869742761135621}
   - component: {fileID: 3280001595125065651}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: RocketTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4941,7 +4941,7 @@ GameObject:
   - component: {fileID: 8670340075158208859}
   - component: {fileID: 8053968000834078755}
   - component: {fileID: 2467832640533600732}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: ShockWaveArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5010,7 +5010,7 @@ GameObject:
   - component: {fileID: 6479867705677174247}
   - component: {fileID: 3870596063295209087}
   - component: {fileID: -5405242548360077042}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: BossProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5168,7 +5168,7 @@ GameObject:
   - component: {fileID: 7093327873694702896}
   - component: {fileID: 6971309658682316436}
   - component: {fileID: 6969912685411605624}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Shockwave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10074,7 +10074,7 @@ GameObject:
   - component: {fileID: 7093607250216028036}
   - component: {fileID: 6971208104690670548}
   - component: {fileID: 6970373069768849394}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Lightning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14980,7 +14980,7 @@ GameObject:
   - component: {fileID: 7092643654850669894}
   - component: {fileID: 6970749452979738344}
   - component: {fileID: 6970099336000789098}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: EnergyExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19917,7 +19917,7 @@ GameObject:
   - component: {fileID: 7093049644020420094}
   - component: {fileID: 6971465253359054858}
   - component: {fileID: 6969907634501647016}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Embers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
