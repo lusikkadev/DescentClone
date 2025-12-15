@@ -6,18 +6,18 @@ public class Impact : MonoBehaviour
     [SerializeField] float lifeTime = 2f;
     [SerializeField] int damage = 10;
     [SerializeField] LayerMask hitMask;
-    [SerializeField] HitScript hitShader;
+
     void Awake()
     {
         Destroy(gameObject, lifeTime);
-        hitShader = FindFirstObjectByType<HitScript>();
+        
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+
         if (((1 << collision.gameObject.layer) & hitMask) != 0)
         {
-            hitShader.Shoot(collision.contacts[0].point);
             if (collision.gameObject.CompareTag("Player"))
             {
                 var statManager = FindAnyObjectByType<StatManager>();

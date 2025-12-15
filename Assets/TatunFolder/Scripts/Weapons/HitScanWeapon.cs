@@ -34,10 +34,11 @@ public class HitScanWeapon : WeaponBase
     [Range(0f, 1f)]
     //[SerializeField] float sequentialFireDelay = 0.1f;
     [SerializeField] int nextMuzzleIndex = 0;
+    [SerializeField] HitScript hitShader;
 
     private void Awake()
     {
-
+        hitShader = FindFirstObjectByType<HitScript>();
     }
 
     public override void Fire(Ray aimRay)
@@ -88,6 +89,7 @@ public class HitScanWeapon : WeaponBase
         Vector3 end;
         if (Physics.Raycast(ray, out var hit, range, hitMask, QueryTriggerInteraction.Ignore))
         {
+            hitShader.Shoot(hit.point);
             end = hit.point;
             // Try to deliver damage to the hit target. Support IDamageable on collider, on parent,
             // and fallback to SendMessageUpwards("TakeDamage", amount) for loose handlers.
