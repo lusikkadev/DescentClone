@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-85465529237553955
+--- !u!114 &-1377948511976458776
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FloorTileShootable
-  m_Shader: {fileID: -6465566751694194690, guid: 514b7a508304df04fae5017f40323844, type: 3}
+  m_Name: FloorHittablePurpleMaterial
+  m_Shader: {fileID: -6465566751694194690, guid: 4102904642fe6a64a9a9eddbedb68bd1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -37,7 +37,11 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _SampleTexture2D_898841aedcdc4ee2898978ebf469e839_Texture_1_Texture2D:
+    - _SampleTexture2D_11695ea0d2304ddaba07a48a0eaeddde_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 72cddb73cb8dab4448a1512495aafcf5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_27b2d0c107214e5e9c36bc9f7a96c6e2_Texture_1_Texture2D:
         m_Texture: {fileID: 2800000, guid: 72cddb73cb8dab4448a1512495aafcf5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -55,8 +59,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _FringeSize: 0.08
     - _QueueControl: 0
     - _QueueOffset: 0
-    m_Colors: []
+    m_Colors:
+    - _FringeColor: {r: 1, g: 0.06707058, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
