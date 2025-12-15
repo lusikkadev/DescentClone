@@ -755,7 +755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitScript
   hitDuration: 1
-  hitRadiusMax: 0.3
+  hitRadiusMax: 1
   hitCurve:
     serializedVersion: 2
     m_Curve:
