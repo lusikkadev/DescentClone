@@ -15,7 +15,6 @@ public struct HitData
 
 public class HitScript : MonoBehaviour
 {
-    public Transform hitPoint;
 
     public float hitDuration = 1f; // seconds
     public float hitRadiusMax = 0.3f;
