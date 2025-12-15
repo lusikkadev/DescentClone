@@ -275,7 +275,7 @@ public partial class @PlayerActionAsset: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""fd334aea-42b4-4046-a948-9fb58853d7b0"",
-                    ""path"": ""<Keyboard>/upArrow"",
+                    ""path"": ""<Keyboard>/i"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -286,7 +286,7 @@ public partial class @PlayerActionAsset: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""8596b167-ad03-49c7-9d10-88aa44ec1821"",
-                    ""path"": ""<Keyboard>/downArrow"",
+                    ""path"": ""<Keyboard>/k"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -297,7 +297,7 @@ public partial class @PlayerActionAsset: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""c23cc1cb-ea99-44c0-ba1e-8e204f06cb85"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""path"": ""<Keyboard>/j"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -308,7 +308,7 @@ public partial class @PlayerActionAsset: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""dea53eda-842e-4bc3-980b-0ec5df4377df"",
-                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""path"": ""<Keyboard>/l"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -363,7 +363,7 @@ public partial class @PlayerActionAsset: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""c38a2e0b-c292-4ae4-b357-33ca09073854"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/u"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -374,7 +374,7 @@ public partial class @PlayerActionAsset: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""582f82c5-45a0-40cb-8dc9-c39325344141"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/o"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -472,6 +472,17 @@ public partial class @PlayerActionAsset: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""621dadc7-6da9-4d7a-a576-6a9053ac328f"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Next Weapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""9fc94333-b98e-485b-ba45-5d291d774b98"",
                     ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
@@ -483,8 +494,30 @@ public partial class @PlayerActionAsset: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""f73893eb-dcf2-406d-9c24-0ca003d9bed2"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Previous Weapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""0fb904f9-e2aa-4dec-8634-1a99b461d2e4"",
                     ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b7a21d47-b157-4639-bf3f-4c5da77be97a"",
+                    ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -506,7 +539,7 @@ public partial class @PlayerActionAsset: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9f4ea55d-674a-40c9-997b-cf9396601d98"",
-                    ""path"": ""<Keyboard>/#(M)"",
+                    ""path"": ""<Keyboard>/m"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
