@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5706270025147678117}
   - component: {fileID: 8197919760997819114}
   m_Layer: 0
-  m_Name: RedKey
+  m_Name: YellowKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f7f167625c7830646b880207f619b41b, type: 2}
+  - {fileID: 2100000, guid: 0749c482169546643958490d5fb06a74, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,9 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d12a272d745294eb336a549baf4b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KeyPickupObject
-  isRedKey: 1
+  isRedKey: 0
   isBlueKey: 0
-  isGreenKey: 0
+  isYellowKey: 1
 --- !u!1 &6475772750017556357
 GameObject:
   m_ObjectHideFlags: 0

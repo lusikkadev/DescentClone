@@ -5,7 +5,8 @@ public class KeyPickupObject : MonoBehaviour
     // Key pickup object script. Attach to keys and set the key Color in inspector.
     [SerializeField] bool isRedKey = false;
     [SerializeField] bool isBlueKey = false;
-    [SerializeField] bool isGreenKey = false;
+    [SerializeField] bool isYellowKey = false;
+    [SerializeField] bool isBlackKey = false;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -19,9 +20,13 @@ public class KeyPickupObject : MonoBehaviour
             {
                 StatManager.Instance.hasBlueKey = true;
             }
-            if (isGreenKey)
+            if (isYellowKey)
             {
-                StatManager.Instance.hasGreenKey = true;
+                StatManager.Instance.hasYellowKey = true;
+            }
+            if (isBlackKey)
+            {
+                StatManager.Instance.hasBlackKey = true;
             }
             Destroy(gameObject);
         }

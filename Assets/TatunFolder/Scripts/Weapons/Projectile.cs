@@ -12,11 +12,13 @@ public class Projectile : MonoBehaviour
     [SerializeField] ParticleSystem explosionEffect;
     [SerializeField] ParticleSystem trailEffect;
     [SerializeField] GameObject shockWave;
+    [SerializeField] HitScript hitShader;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         Destroy(gameObject, lifeTime);
+        hitShader = FindFirstObjectByType<HitScript>();
     }
 
     public void Initialize(Vector3 initialVelocity, Vector3 inheritVelocity, Rigidbody owner, LayerMask mask)
@@ -41,6 +43,7 @@ public class Projectile : MonoBehaviour
     {
         if (((1 << collision.gameObject.layer) & hitMask) == 0) return;
         rb.linearVelocity = Vector3.zero;
+        hitShader.Shoot(collision.contacts[0].point);
         // enable shockwave
         if (shockWave != null)
         {

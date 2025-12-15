@@ -18,7 +18,8 @@ public class StatManager : MonoBehaviour, IDamageable
     [Header("Key Items")]
     public bool hasRedKey = false;
     public bool hasBlueKey = false;
-    public bool hasGreenKey = false;
+    public bool hasYellowKey = false;
+    public bool hasBlackKey = false;
 
     [Header("Regen Settings")]
     public int minEnergy = 0;

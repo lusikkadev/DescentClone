@@ -20,7 +20,7 @@ MonoBehaviour:
   avoidRays: 7
   avoidStrength: 12
   desiredCombatDistance: 10
-  fireInterval: 1.5
+  fireInterval: 1.2
   projectileSpeed: 40
   detectionRange: 40
   detectionAngle: 90

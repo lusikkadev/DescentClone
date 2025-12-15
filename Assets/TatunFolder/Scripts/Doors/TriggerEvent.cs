@@ -12,7 +12,8 @@ public class TriggerEvent : MonoBehaviour
     [Header("Event Settings")]
     [SerializeField] bool needRedKey = false;
     [SerializeField] bool needBlueKey = false;
-    [SerializeField] bool needGreenKey = false;
+    [SerializeField] bool needYellowKey = false;
+    [SerializeField] bool needBlackKey = false; 
     [SerializeField] bool hasRequiredKey = false;
 
     private void Start()
@@ -28,7 +29,7 @@ public class TriggerEvent : MonoBehaviour
         if (!other.CompareTag("Player"))
             return;
 
-        if (!needRedKey && !needBlueKey && !needGreenKey)
+        if (!needRedKey && !needBlueKey && !needYellowKey && !needBlackKey)
         {
             onDoorTriggerEnter.Invoke();
             return;
@@ -44,7 +45,9 @@ public class TriggerEvent : MonoBehaviour
             hasRequiredKey = true;
         if (needBlueKey && StatManager.Instance.hasBlueKey)
             hasRequiredKey = true;
-        if (needGreenKey && StatManager.Instance.hasGreenKey)
+        if (needYellowKey && StatManager.Instance.hasYellowKey)
+            hasRequiredKey = true;
+        if (needBlackKey && StatManager.Instance.hasBlackKey)
             hasRequiredKey = true;
 
         if (hasRequiredKey)
