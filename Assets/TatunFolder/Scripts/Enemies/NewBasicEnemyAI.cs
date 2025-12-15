@@ -1,10 +1,14 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class NewBasicEnemyAI : MonoBehaviour, IDamageable
 {
     public enum State { Patrol, Chasing, Searching, Returning }
+
+    public ParticleSystem deathFX;
+    public GameObject body;
 
     [Header("Profile (optional)")]
     public EnemyProfileSO profile;
@@ -655,7 +659,6 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
         if (all) Die();
     }
 
-    // Apply actual damage regardless of requireEyeHits flag (used by BossEye)
     public void ApplyDamage(int amount)
     {
         health -= amount;
@@ -664,6 +667,52 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
 
     public void Die()
     {
+      StartCoroutine(DeathRoutine());
+    }
+
+    IEnumerator DeathRoutine()
+    {
+        // hide visuals
+        if (body != null)
+        {
+            body.SetActive(false);
+        }
+        else
+        {
+            var rends = GetComponentsInChildren<Renderer>(true);
+            foreach (var r in rends)
+                if (r != null) r.enabled = false;
+        }
+
+        AudioFW.Play(id: "EnemyDeath");
+
+        // play death FX
+        if (deathFX != null)
+        {
+            ParticleSystem fx = Instantiate(deathFX, transform.position, Quaternion.identity);
+            if (fx != null)
+            {
+                fx.transform.SetParent(null);
+                fx.Play();
+
+                // compute a safe lifetime and destroy the fx gameobject after it finishes
+                var main = fx.main;
+                float life = main.duration;
+                // handle startLifetime being a constant or a curve; use constantMax for safety
+                float startLifetime = 0f;
+                if (main.startLifetime.mode == ParticleSystemCurveMode.TwoConstants || main.startLifetime.mode == ParticleSystemCurveMode.TwoCurves)
+                    startLifetime = main.startLifetime.constantMax;
+                else
+                    startLifetime = main.startLifetime.constant;
+                float total = life + startLifetime + 0.25f;
+                Destroy(fx.gameObject, total);
+            }
+        }
+
+        // stop attacking and moving
+        if (rb != null) rb.linearVelocity = Vector3.zero;
+        this.enabled = false;
+        yield return new WaitForSeconds(2f);
         Destroy(gameObject);
     }
     #endregion

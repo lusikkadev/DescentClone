@@ -416,8 +416,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 018cfdc1baf0e3f4e81289ee8f44eb4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewBasicEnemyAI
+  deathFX: {fileID: 198175801688348628, guid: 8f5bf83367418de4f950534ab16f1059, type: 3}
+  body: {fileID: 2067333873241407642}
   profile: {fileID: 11400000, guid: 0d95ddc4c4f2e4d42898e9ea29762a6a, type: 2}
   firingPosition: {fileID: 8876813651180673534}
+  firingPositions: []
   projectilePrefab: {fileID: 5447639557416043054, guid: f1e380c6079395948bd614b1f83d9a39, type: 3}
   patrolCenter: {fileID: 0}
   patrolBoxSize: {x: 6, y: 8, z: 20}
@@ -435,7 +438,10 @@ MonoBehaviour:
   fireInterval: 1.5
   projectileSpeed: 40
   loseSightTime: 5
+  sequentialMuzzleFire: 0
+  muzzleSequentialDelay: 0.08
   aimSpreadDegrees: 3
+  aimPredictionFactor: 0.6
   maxAccel: 40
   linearDamping: 0.9
   avoidDistance: 3
@@ -455,7 +461,9 @@ MonoBehaviour:
   stuckVelocityThreshold: 0.6
   unstuckForce: 6
   drawDebugGizmos: 0
+  weakSpots: []
   health: 50
+  requireEyeHits: 0
 --- !u!135 &7870220880013572241
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -595,5 +603,10 @@ PrefabInstance:
 --- !u!4 &1728104180945492512 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 04c0f6f88d911454881edc5f035bf607, type: 3}
+  m_PrefabInstance: {fileID: 1184953464093081035}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2067333873241407642 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 04c0f6f88d911454881edc5f035bf607, type: 3}
   m_PrefabInstance: {fileID: 1184953464093081035}
   m_PrefabAsset: {fileID: 0}

@@ -62,6 +62,12 @@ public class EnemyMover : MonoBehaviour
     [Header("Assembly options")]
     [Tooltip("If true, child turrets with Rigidbodies will be set kinematic at Start so the boss moves as a single body.")]
     public bool enforceChildRigidbodiesKinematic = true;
+    [Header("Rewards")]
+    [Tooltip("Optional: prefab to spawn when all boss parts (turrets) are destroyed.")]
+    public GameObject keyPickupPrefab;
+
+    // internal
+    bool keySpawned = false;
 
     Rigidbody rb;
     Transform player;
@@ -126,6 +132,10 @@ public class EnemyMover : MonoBehaviour
 
     void Update()
     {
+        // spawn key pickup when all turrets (boss parts) are destroyed
+        if (!keySpawned)
+            CheckAndSpawnKeyIfAllTurretsDestroyed();
+
         if (player == null) return;
 
         if (CanSeePlayer())
@@ -488,5 +498,29 @@ public class EnemyMover : MonoBehaviour
         Vector3 right = Quaternion.Euler(0, detectionAngle * 0.5f, 0) * transform.forward * detectionRange;
         Gizmos.DrawLine(transform.position, transform.position + left);
         Gizmos.DrawLine(transform.position, transform.position + right);
+    }
+
+    void CheckAndSpawnKeyIfAllTurretsDestroyed()
+    {
+        // find any EnemyTurret components in children (including inactive)
+        var turrets = GetComponentsInChildren<EnemyTurret>(true);
+        bool anyAlive = false;
+        foreach (var t in turrets)
+        {
+            if (t == null) continue;
+            // consider turret alive if its GameObject is not null and active in hierarchy
+            if (t.gameObject != null && t.gameObject.activeInHierarchy)
+            {
+                anyAlive = true;
+                break;
+            }
+        }
+
+        if (!anyAlive && !keySpawned && keyPickupPrefab != null)
+        {
+            Vector3 spawnPos = patrolCenter != null ? patrolCenter.position : transform.position;
+            Instantiate(keyPickupPrefab, spawnPos, Quaternion.identity);
+            keySpawned = true;
+        }
     }
 }

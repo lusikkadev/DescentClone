@@ -336,7 +336,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.35688272, b: 0, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -10021,6 +10021,7 @@ MonoBehaviour:
   - {fileID: 5998351807550122017}
   sequentialFiring: 0
   nextMuzzleIndex: 0
+  hitShader: {fileID: 0}
 --- !u!82 &-183986557438758048
 AudioSource:
   m_ObjectHideFlags: 0

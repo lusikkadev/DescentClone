@@ -1091,6 +1091,7 @@ MonoBehaviour:
   unstuckForce: 6
   drawDebugGizmos: 0
   enforceChildRigidbodiesKinematic: 1
+  keyPickupPrefab: {fileID: 1089839188134969369, guid: e5803a375fb656d48a21caabdf1c68f2, type: 3}
 --- !u!1 &8499958606400350568
 GameObject:
   m_ObjectHideFlags: 0
@@ -1419,6 +1420,9 @@ MonoBehaviour:
   aimSpreadDegrees: 6
   aimPredictionFactor: 0.6
   rotationSpeed: 6
+  deathFX: {fileID: 198175801688348628, guid: 8f5bf83367418de4f950534ab16f1059, type: 3}
+  body: {fileID: 949587481953626070}
+  deathFXScale: 5
   drawDebugGizmos: 0
   health: 100
 --- !u!1001 &1299848003299889849
@@ -1593,6 +1597,9 @@ MonoBehaviour:
   aimSpreadDegrees: 6
   aimPredictionFactor: 1
   rotationSpeed: 6
+  deathFX: {fileID: 198175801688348628, guid: 8f5bf83367418de4f950534ab16f1059, type: 3}
+  body: {fileID: 2218186706639515624}
+  deathFXScale: 5
   drawDebugGizmos: 0
   health: 100
 --- !u!1001 &2518567565761575284
@@ -1767,6 +1774,9 @@ MonoBehaviour:
   aimSpreadDegrees: 6
   aimPredictionFactor: 1
   rotationSpeed: 6
+  deathFX: {fileID: 198175801688348628, guid: 8f5bf83367418de4f950534ab16f1059, type: 3}
+  body: {fileID: 3328958415300248613}
+  deathFXScale: 5
   drawDebugGizmos: 0
   health: 100
 --- !u!1001 &3342443515204370434
@@ -1936,6 +1946,9 @@ MonoBehaviour:
   aimSpreadDegrees: 6
   aimPredictionFactor: 1
   rotationSpeed: 6
+  deathFX: {fileID: 198175801688348628, guid: 8f5bf83367418de4f950534ab16f1059, type: 3}
+  body: {fileID: 2496075541264579923}
+  deathFXScale: 5
   drawDebugGizmos: 0
   health: 100
 --- !u!4 &3019672167922919401 stripped
@@ -2110,6 +2123,9 @@ MonoBehaviour:
   aimSpreadDegrees: 6
   aimPredictionFactor: 0.6
   rotationSpeed: 6
+  deathFX: {fileID: 198175801688348628, guid: 8f5bf83367418de4f950534ab16f1059, type: 3}
+  body: {fileID: 4889973488260163592}
+  deathFXScale: 5
   drawDebugGizmos: 0
   health: 100
 --- !u!4 &5230786201600094898 stripped
@@ -2278,5 +2294,8 @@ MonoBehaviour:
   aimSpreadDegrees: 6
   aimPredictionFactor: 0.973
   rotationSpeed: 6
+  deathFX: {fileID: 198175801688348628, guid: 8f5bf83367418de4f950534ab16f1059, type: 3}
+  body: {fileID: 7555089921024582598}
+  deathFXScale: 5
   drawDebugGizmos: 0
   health: 100

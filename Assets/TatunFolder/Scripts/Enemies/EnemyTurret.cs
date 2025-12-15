@@ -26,6 +26,12 @@ public class EnemyTurret : MonoBehaviour, IDamageable
     [Header("Rotation")]
     public float rotationSpeed = 6f;
 
+    [Header("Death")]
+    public ParticleSystem deathFX;
+    public GameObject body;
+    [Tooltip("Scale multiplier applied to the instantiated death FX (useful for larger bosses)")]
+    public float deathFXScale = 1f;
+
     [Header("Debug")]
     public bool drawDebugGizmos = false;
 
@@ -98,6 +104,60 @@ public class EnemyTurret : MonoBehaviour, IDamageable
 
     void Die()
     {
+        StartCoroutine(DeathRoutine());
+    }
+
+    IEnumerator DeathRoutine()
+    {
+        if (deathFX != null)
+        {
+            ParticleSystem fx = Instantiate(deathFX, transform.position, Quaternion.identity);
+            if (fx != null)
+            {
+                fx.transform.SetParent(null);
+                var main = fx.main;
+                // apply optional scaling for larger bosses: scale transform and particle sizes
+                if (Mathf.Abs(deathFXScale - 1f) > 1e-6f)
+                {
+                    fx.transform.localScale = Vector3.one * deathFXScale;
+                    // multiply particle start size multiplier so particles scale regardless of simulation space
+                    main.startSizeMultiplier *= deathFXScale;
+                }
+                fx.Play();
+
+                float life = main.duration;
+                float startLifetime = 0f;
+                if (main.startLifetime.mode == ParticleSystemCurveMode.TwoConstants || main.startLifetime.mode == ParticleSystemCurveMode.TwoCurves)
+                    startLifetime = main.startLifetime.constantMax;
+                else
+                    startLifetime = main.startLifetime.constant;
+                float total = life + startLifetime + 0.25f;
+                Destroy(fx.gameObject, total);
+            }
+        }
+
+        AudioFW.Play(id: "EnemyDeath");
+
+        if (body != null)
+        {
+            body.SetActive(false);
+        }
+        else
+        {
+            var rends = GetComponentsInChildren<Renderer>(true);
+            foreach (var r in rends)
+                if (r != null) r.enabled = false;
+        }
+
+        var cols = GetComponentsInChildren<Collider>(true);
+        foreach (var c in cols)
+            if (c != null) c.enabled = false;
+
+        // stop firing and movement
+        if (rb != null) rb.angularVelocity = Vector3.zero;
+        this.enabled = false;
+
+        yield return new WaitForSeconds(3.0f);
         Destroy(gameObject);
     }
 
