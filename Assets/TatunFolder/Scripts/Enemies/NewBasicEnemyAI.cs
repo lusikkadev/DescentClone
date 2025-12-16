@@ -683,6 +683,8 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
             foreach (var r in rends)
                 if (r != null) r.enabled = false;
         }
+        var collider = GetComponent<Collider>();
+        if (collider != null) collider.enabled = false;
 
         AudioFW.Play(id: "EnemyDeath");
 
