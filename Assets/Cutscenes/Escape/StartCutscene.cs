@@ -12,7 +12,7 @@ public class StartCutscene : MonoBehaviour
     {
         director = GetComponentInChildren<PlayableDirector>();
     }
-    void StartTimeline()
+   public void StartTimeline()
     {
         foreach (var go in disableTheseOnStart)
         {
