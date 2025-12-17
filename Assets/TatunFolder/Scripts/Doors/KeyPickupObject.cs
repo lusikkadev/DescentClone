@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class KeyPickupObject : MonoBehaviour
 {
-    // Key pickup object script. Attach to keys and set the key Color in inspector.
     [SerializeField] bool isRedKey = false;
     [SerializeField] bool isBlueKey = false;
     [SerializeField] bool isYellowKey = false;

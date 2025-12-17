@@ -20,7 +20,7 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
     public GameObject projectilePrefab;
 
     [Header("Patrol (box)")]
-    public Transform patrolCenter; // default self position
+    public Transform patrolCenter; // default is self position
     public Vector3 patrolBoxSize = new Vector3(10f, 4f, 6f);
     public int patrolPointCount = 4;
     public float patrolSpeed = 6f;
@@ -111,8 +111,8 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
     // Expose select internals for helper components
     public Transform Player => player;
     public Rigidbody Rb => rb;
-    [Header("Boss options")]
-    [Tooltip("When true, only hits to the Boss eye (via BossEye component) will reduce health. Body hits still alert the boss.")]
+
+    // weak point system, not in final yet
     public bool requireEyeHits = false;
 
     void Awake()
@@ -244,7 +244,7 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
     {
         if (rb == null) return;
 
-        // damping to avoid runaway drift
+        // damping to avoid drift
         rb.linearVelocity *= linearDamping;
 
         // stuck detection
@@ -265,7 +265,7 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
         fireTimer = 0f;
     }
 
-    // --- Patrol ---
+    // Patrol
     void UpdatePatrol()
     {
         if (patrolPoints == null || patrolPoints.Length == 0) return;
@@ -279,7 +279,7 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
         AlignToVelocity();
     }
 
-    // --- Chase ---
+    // Chase
     void UpdateChase()
     {
         if (player == null) return;
@@ -317,7 +317,7 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
             fireTimer = 0f;
         }
 
-        // debug: draw orbit direction/offset
+        // debug gizmos
         if (drawDebugGizmos)
         {
             Debug.DrawLine(transform.position, combatPos, Color.magenta);
@@ -377,7 +377,7 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
             Vector3 dir = rot * transform.forward;
             if (Physics.SphereCast(transform.position, 0.25f, dir, out RaycastHit hit, avoidDistance, obstacleMask, QueryTriggerInteraction.Ignore))
             {
-                // accumulate normals for averaged plane/sliding
+                // accumulate normals for average slide
                 normalSum += hit.normal;
 
                 // repulsion away from hit point
@@ -412,10 +412,10 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
         return avoid;
     }
 
-    // Stuck detection and unstuck logic
+    // STUCK DETECTION AND UNSTUCK
     void CheckStuckAndUnstuck()
     {
-        // if slowed down and detected nearby geometry, apply impulse away
+        // if slowed down and detected nearby geometry, force push away
         if (rb.linearVelocity.magnitude < stuckVelocityThreshold)
         {
             Collider[] cols = Physics.OverlapSphere(transform.position, stuckProbeRadius, obstacleMask, QueryTriggerInteraction.Ignore);
@@ -511,10 +511,11 @@ public class NewBasicEnemyAI : MonoBehaviour, IDamageable
     {
         if (projectilePrefab == null || player == null) return;
 
-        // choose muzzles: prefer firingPositions array if populated, otherwise fallback to single firingPosition
+        // Choose muzzles, can do with many or just one
         Transform[] muzzles = firingPositions != null && firingPositions.Length > 0 ? firingPositions : (firingPosition != null ? new Transform[] { firingPosition } : null);
         if (muzzles == null || muzzles.Length == 0) return;
 
+        // If sequential with delay between muzzles
         if (sequentialMuzzleFire)
         {
             StartCoroutine(FireMuzzlesSequential(muzzles));
